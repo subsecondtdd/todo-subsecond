@@ -1,0 +1,10 @@
+{
+  "name": "todo-subsecond",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Josh Chisholm <joshuachisholm@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "cucumber": "^3.0.2"
+  }
+}
