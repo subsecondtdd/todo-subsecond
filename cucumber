@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-cpro_babel_off=1 node node_modules/.bin/cucumber.js "$@"
+node node_modules/.bin/cucumber.js "$@"
