@@ -11,5 +11,5 @@ When('I add a todo to the todo list', function () {
 })
 
 Then('there should be {int} todos in the todo list', function (count) {
-  assert.equal(this.actionTodoList.getItems().length, count)
+  assert.equal(this.outcomeTodoList.getItems().length, count)
 })
