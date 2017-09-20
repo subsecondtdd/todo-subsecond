@@ -1,5 +1,5 @@
 module.exports = class DomTodoList {
-  createTodo() {
-    
+  addTodo() {
+
   }
 }

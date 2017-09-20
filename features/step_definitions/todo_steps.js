@@ -1,6 +1,10 @@
-const { Given } = require('cucumber')
+const { Given, When } = require('cucumber')
 
-Given('the {todolist} has {int} todo(s)', function (todolist, count) {
+Given('the todo list has {int} todo(s)', function (count) {
   for (let i = 0; i < count; i++)
-    todolist.createTodo({ text: `Todo ${i}` })
+    this.contextTodoList.addTodo({ text: `Todo ${i}` })
+})
+
+When('I add a todo to the todo list', function () {
+  this.actionTodoList.addTodo({ text: "New Todo" })
 })
