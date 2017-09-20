@@ -9,6 +9,7 @@ module.exports = class DomTodoList {
   }
 
   getItems() {
-    return [null, null]
+    const itemNodes = [...this._domNode.querySelector('[aria-label="Todos"]').querySelectorAll('li')]
+    return itemNodes
   }
 }
