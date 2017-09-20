@@ -8,5 +8,8 @@
     "cucumber": "^3.0.2",
     "cucumber-electron": "^2.3.1",
     "electron": "^1.7.6"
+  },
+  "scripts": {
+    "test": "./cucumber && ./cucumber-electron && CUCUMBER_OUTCOME=DOM ./cucumber-electron"
   }
 }

@@ -12,14 +12,15 @@ class TodoWorld {
 
     this.contextTodoList = todoList
 
-    if (global.document) {
-      const domTodoList = createDomTodoList(todoList)
-      this.actionTodoList = domTodoList
-    } else {
+    if (global.document)
+      this.actionTodoList = createDomTodoList(todoList)
+    else
       this.actionTodoList = todoList
-    }
 
-    this.outcomeTodoList = todoList
+    if (process.env.CUCUMBER_OUTCOME === 'DOM') {
+      this.outcomeTodoList = this.actionTodoList
+    } else
+      this.outcomeTodoList = todoList
   }
 }
 
