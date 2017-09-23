@@ -10,17 +10,17 @@ class TodoWorld {
   constructor() {
     const todoList = new TodoList()
 
-    this.contextTodoList = todoList
+    this.contextTodoList = () => todoList
 
     if (global.document)
-      this.actionTodoList = createDomTodoList(todoList)
+      this.actionTodoList = () => createDomTodoList(this.contextTodoList())
     else
-      this.actionTodoList = todoList
+      this.actionTodoList = this.contextTodoList
 
     if (process.env.CUCUMBER_OUTCOME === 'DOM') {
       this.outcomeTodoList = this.actionTodoList
     } else
-      this.outcomeTodoList = todoList
+      this.outcomeTodoList = this.contextTodoList
   }
 }
 
