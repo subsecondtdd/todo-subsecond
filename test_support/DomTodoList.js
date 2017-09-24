@@ -3,12 +3,12 @@ module.exports = class DomTodoList {
     this._domNode = domNode
   }
 
-  addTodo({ text }) {
+  async addTodo({ text }) {
     this._domNode.querySelector('[aria-label="New Todo Text"]').value = text
     this._domNode.querySelector('[aria-label="Add Todo"]').click()
   }
 
-  getItems() {
+  async getItems() {
     const itemNodes = [...this._domNode.querySelector('[aria-label="Todos"]').querySelectorAll('li')]
     return itemNodes
   }

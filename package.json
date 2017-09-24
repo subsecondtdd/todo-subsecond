@@ -7,9 +7,15 @@
   "devDependencies": {
     "cucumber": "^3.0.2",
     "cucumber-electron": "^2.3.1",
-    "electron": "^1.7.6"
+    "electron": "^1.7.6",
+    "jsdom": "^11.2.0"
   },
   "scripts": {
-    "test": "./cucumber && ./cucumber-electron && CUCUMBER_OUTCOME=DOM ./cucumber-electron"
+    "test": "./cucumber && ./cucumber-electron && CUCUMBER_ACTION=HTTP ./cucumber && CUCUMBER_OUTCOME=DOM ./cucumber-electron"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4",
+    "node-fetch": "^1.7.3"
   }
 }

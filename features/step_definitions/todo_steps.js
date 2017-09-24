@@ -1,16 +1,21 @@
 const assert = require('assert')
 const { Given, When, Then } = require('cucumber')
 
-Given('the todo list has {int} todo(s)', function (count) {
+Given('the todo list has {int} todo(s)', async function (count) {
+  const todoList = await this.contextTodoList()
   for (let i = 0; i < count; i++)
-    this.contextTodoList().addTodo({ text: `Todo ${i}` })
-  assert.equal(this.contextTodoList().getItems().length, count)
+    await todoList.addTodo({ text: `Todo ${i}` })
+  const items = await todoList.getItems()
+  assert.equal(items.length, count)
 })
 
-When('I add a todo to the todo list', function () {
-  this.actionTodoList().addTodo({ text: "New Todo" })
+When('I add a todo to the todo list', async function () {
+  const todoList = await this.actionTodoList()
+  await todoList.addTodo({ text: "New Todo" })
 })
 
-Then('there should be {int} todos in the todo list', function (count) {
-  assert.equal(this.outcomeTodoList().getItems().length, count)
+Then('there should be {int} todos in the todo list', async function (count) {
+  const todoList = await this.outcomeTodoList()
+  const items = await todoList.getItems()
+  assert.equal(items.length, count)
 })
