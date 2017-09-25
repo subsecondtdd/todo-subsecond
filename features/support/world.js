@@ -1,13 +1,14 @@
 const fs = require('fs')
 const path = require('path')
 
-const { setWorldConstructor } = require('cucumber')
+const { setWorldConstructor, After } = require('cucumber')
 const memoize = require('map-memo')
 const TodoList = require('../../lib/TodoList')
 const HttpTodoList = require('../../lib/HttpTodoList')
 const mountBrowserApp = require('../../lib/mountBrowserApp')
 const mountWebApp = require('../../lib/mountWebApp')
 const DomTodoList = require('../../test_support/DomTodoList')
+const BrowserTodoList = require('../../test_support/BrowserTodoList')
 
 if(process.env.CUCUMBER_DOM === 'true') {
   // This is primarily for debugging - cucumber-electron doesn't always provide
@@ -38,6 +39,17 @@ const factory = {
         resolve(new HttpTodoList(baseUrl))
       })
     })
+  }),
+  browserTodoList: memoize(async () => {
+    const webApp = await mountWebApp({ todoList: new TodoList() })
+    const port = 8898
+    const baseUrl = `http://localhost:${port}`
+    return new Promise((resolve, reject) => {
+      webApp.listen(port, err => {
+        if (err) return reject(err)
+        resolve(new BrowserTodoList(baseUrl))
+      })
+    })
   })
 }
 
@@ -66,6 +78,11 @@ const assemblies = {
     contextTodoList: async () => factory.todoList(),
     actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
     outcomeTodoList: async () => factory.todoList(),
+  },
+  'integrated': {
+    contextTodoList: async () => factory.browserTodoList(),
+    actionTodoList: async () => factory.browserTodoList(),
+    outcomeTodoList: async () => factory.browserTodoList()
   }
 }
 
@@ -73,5 +90,19 @@ class TodoWorld {
   constructor() {
     Object.assign(this, assemblies[process.env.CUCUMBER_HONEYCOMB || 'memory'])
   }
+
+  async stop() {
+    return await Promise.all([
+      await this.contextTodoList(),
+      await this.actionTodoList(),
+      await this.outcomeTodoList()
+    ].map(list => {
+      return list.stop ? list.stop() : Promise.resolve()
+    }))
+  }
 }
 setWorldConstructor(TodoWorld)
+
+After(async function () {
+  await this.stop()
+})

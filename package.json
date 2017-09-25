@@ -9,18 +9,23 @@
     "cucumber-electron": "^2.3.1",
     "electron": "^1.7.6",
     "jsdom": "^11.2.0",
-    "map-memo": "^2.1.1"
+    "map-memo": "^2.1.1",
+    "selenium-webdriver": "^3.5.0"
   },
   "scripts": {
+    "start": "node lib/start.js",
     "memory": "./cucumber",
     "http-domain": "CUCUMBER_HONEYCOMB=http-domain ./cucumber",
     "ui-domain": "CUCUMBER_HONEYCOMB=ui-domain ./cucumber-electron",
     "full-stack": "CUCUMBER_HONEYCOMB=full-stack ./cucumber-electron",
     "full-stack-lite": "CUCUMBER_HONEYCOMB=full-stack-lite ./cucumber-electron",
-    "test": "yarn memory && yarn http-domain && yarn ui-domain && yarn full-stack"
+    "integrated": "CUCUMBER_HONEYCOMB=integrated ./cucumber",
+    "test": "yarn memory && yarn http-domain && yarn ui-domain && yarn full-stack && yarn integrated"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
+    "browserify": "^14.4.0",
+    "browserify-middleware": "^7.1.0",
     "express": "^4.15.4",
     "node-fetch": "^1.7.3"
   }
