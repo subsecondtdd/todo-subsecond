@@ -20,7 +20,8 @@
     "full-stack": "CUCUMBER_HONEYCOMB=full-stack ./cucumber-electron",
     "full-stack-lite": "CUCUMBER_HONEYCOMB=full-stack-lite ./cucumber-electron",
     "integrated": "CUCUMBER_HONEYCOMB=integrated ./cucumber",
-    "test": "yarn memory && yarn http-domain && yarn ui-domain && yarn full-stack && yarn integrated"
+    "test": "yarn memory && yarn http-domain && yarn ui-domain && yarn full-stack && yarn integrated",
+    "parallel": "yarn memory & yarn http-domain & yarn ui-domain & yarn full-stack & yarn integrated"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
