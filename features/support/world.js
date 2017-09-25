@@ -61,6 +61,11 @@ const assemblies = {
     contextTodoList: async () => factory.todoList(),
     actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
     outcomeTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
+  },
+  'full-stack-lite': {
+    contextTodoList: async () => factory.todoList(),
+    actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
+    outcomeTodoList: async () => factory.todoList(),
   }
 }
 

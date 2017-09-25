@@ -16,6 +16,7 @@
     "http-domain": "CUCUMBER_HONEYCOMB=http-domain ./cucumber",
     "ui-domain": "CUCUMBER_HONEYCOMB=ui-domain ./cucumber-electron",
     "full-stack": "CUCUMBER_HONEYCOMB=full-stack ./cucumber-electron",
+    "full-stack-lite": "CUCUMBER_HONEYCOMB=full-stack-lite ./cucumber-electron",
     "test": "yarn memory && yarn http-domain && yarn ui-domain && yarn full-stack"
   },
   "dependencies": {
