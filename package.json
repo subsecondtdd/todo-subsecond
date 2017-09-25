@@ -8,10 +8,15 @@
     "cucumber": "^3.0.2",
     "cucumber-electron": "^2.3.1",
     "electron": "^1.7.6",
-    "jsdom": "^11.2.0"
+    "jsdom": "^11.2.0",
+    "map-memo": "^2.1.1"
   },
   "scripts": {
-    "test": "./cucumber && ./cucumber-electron && CUCUMBER_ACTION=HTTP ./cucumber && CUCUMBER_OUTCOME=DOM ./cucumber-electron"
+    "memory": "./cucumber",
+    "http-domain": "CUCUMBER_HONEYCOMB=http-domain ./cucumber",
+    "ui-domain": "CUCUMBER_HONEYCOMB=ui-domain ./cucumber-electron",
+    "full-stack": "CUCUMBER_HONEYCOMB=full-stack ./cucumber-electron",
+    "test": "yarn memory && yarn http-domain && yarn ui-domain && yarn full-stack"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
