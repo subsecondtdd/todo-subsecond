@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  background-color: rgb(245, 245, 245);
+  color: #333;
+}
+body::before {
+  content: 'todos';
+  display: block;
+  text-align: center;
+  padding: 20px;
+  font-size: 100px;
+  color: rgba(175, 47, 47, 0.3);
+  font-weight: 100;
+}
+form {
+  text-align: center;
+  width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 3px solid #efefef;
+  border-bottom: none;
+  position: relative;
+}
+input[type="checkbox"] {
+  transform:scale(2, 2);
+  position: absolute;
+  left: 32px;
+  top: 28px;
+}
+form input, form button, ol li label {
+  font-size: 30px;
+  font-weight: 400;
+}
+form input[type="text"], form input[type="submit"] {
+  border: 2px solid #efefef;
+  padding: 10px;
+}
+
+form input[type="text"] {
+  width: 400px;
+  text-indent: 20px;
+}
+form input[type="submit"] {
+  width: 120px;
+  margin-left: 5px;
+}
+ol {
+  margin: 0;
+  width: 600px;
+  margin: auto;
+  padding: 0;
+  border: 3px solid #efefef;
+  border-top: none;
+}
+ol li {
+  list-style-type: none;
+  border-top: 2px solid #efefef;
+  position: relative;
+}
+ol li label {
+  width: 100%;
+  display: block;
+  padding: 20px;
+  background-color: #fff;
+  color: #333;
+  padding-left: 80px;
+}
+ol li label:hover {
+  background-color: rgba(250, 250, 250, 0.15);
+}
+ol li input {
+  font-size: 30px;
+}
