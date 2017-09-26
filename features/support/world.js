@@ -18,76 +18,76 @@ if(process.env.CUCUMBER_DOM === 'true') {
   global.document = dom.window.document
 }
 
-const factory = {
-  todoList: memoize(async () => new TodoList()),
-  domTodoList: memoize(async todoList => {
-    const publicIndexHtmlPath = path.join(__dirname, '..', '..', 'public', 'index.html')
-    const html = fs.readFileSync(publicIndexHtmlPath, 'utf-8')
-    const domNode = document.createElement('div')
-    domNode.innerHTML = html
-    document.body.appendChild(domNode)
-    await mountBrowserApp({ domNode, todoList })
-    return new DomTodoList(domNode)
-  }),
-  httpTodoList: memoize(async todoList => {
-    const webApp = await mountWebApp({ todoList })
-    const port = 8899
-    const baseUrl = `http://localhost:${port}`
-    return new Promise((resolve, reject) => {
-      webApp.listen(port, err => {
-        if (err) return reject(err)
-        resolve(new HttpTodoList(baseUrl))
-      })
-    })
-  }),
-  webDriverTodoList: memoize(async todoList => {
-    const webApp = await mountWebApp({ todoList })
-    const port = 8898
-    const baseUrl = `http://localhost:${port}`
-    return new Promise((resolve, reject) => {
-      webApp.listen(port, err => {
-        if (err) return reject(err)
-        resolve(new WebDriverTodoList(baseUrl))
-      })
-    })
-  })
-}
-
-const assemblies = {
-  'memory': {
-    contextTodoList: async () => factory.todoList(),
-    actionTodoList: async () => factory.todoList(),
-    outcomeTodoList: async () => factory.todoList(),
-  },
-  'http-domain': {
-    contextTodoList: async () => factory.todoList(),
-    actionTodoList: async () => await factory.httpTodoList(await factory.todoList()),
-    outcomeTodoList: async () => factory.todoList(),
-  },
-  'ui-domain': {
-    contextTodoList: async () => factory.todoList(),
-    actionTodoList: async () => factory.domTodoList(await factory.todoList()),
-    outcomeTodoList: async () => factory.domTodoList(await factory.todoList()),
-  },
-  'full-stack': {
-    contextTodoList: async () => factory.todoList(),
-    actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
-    outcomeTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
-  },
-  'full-stack-lite': {
-    contextTodoList: async () => factory.todoList(),
-    actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
-    outcomeTodoList: async () => factory.todoList(),
-  },
-  'integrated': {
-    contextTodoList: async () => factory.webDriverTodoList(await factory.todoList()),
-    actionTodoList: async () => factory.webDriverTodoList(await factory.todoList()),
-    outcomeTodoList: async () => factory.webDriverTodoList(await factory.todoList())
-  }
-}
-
 class TodoWorld {
   constructor() {
+    const factory = {
+      todoList: memoize(async () => new TodoList()),
+      domTodoList: memoize(async todoList => {
+        const publicIndexHtmlPath = path.join(__dirname, '..', '..', 'public', 'index.html')
+        const html = fs.readFileSync(publicIndexHtmlPath, 'utf-8')
+        const domNode = document.createElement('div')
+        domNode.innerHTML = html
+        document.body.appendChild(domNode)
+        await mountBrowserApp({ domNode, todoList })
+        return new DomTodoList(domNode)
+      }),
+      httpTodoList: memoize(async todoList => {
+        const webApp = await mountWebApp({ todoList })
+        const port = 8899
+        const baseUrl = `http://localhost:${port}`
+        return new Promise((resolve, reject) => {
+          webApp.listen(port, err => {
+            if (err) return reject(err)
+            resolve(new HttpTodoList(baseUrl))
+          })
+        })
+      }),
+      webDriverTodoList: memoize(async todoList => {
+        const webApp = await mountWebApp({ todoList })
+        const port = 8898
+        const baseUrl = `http://localhost:${port}`
+        return new Promise((resolve, reject) => {
+          webApp.listen(port, err => {
+            if (err) return reject(err)
+            resolve(new WebDriverTodoList(baseUrl))
+          })
+        })
+      })
+    }
+
+    const assemblies = {
+      'memory': {
+        contextTodoList: async () => factory.todoList(),
+        actionTodoList: async () => factory.todoList(),
+        outcomeTodoList: async () => factory.todoList(),
+      },
+      'http-domain': {
+        contextTodoList: async () => factory.todoList(),
+        actionTodoList: async () => await factory.httpTodoList(await factory.todoList()),
+        outcomeTodoList: async () => factory.todoList(),
+      },
+      'ui-domain': {
+        contextTodoList: async () => factory.todoList(),
+        actionTodoList: async () => factory.domTodoList(await factory.todoList()),
+        outcomeTodoList: async () => factory.domTodoList(await factory.todoList()),
+      },
+      'full-stack': {
+        contextTodoList: async () => factory.todoList(),
+        actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
+        outcomeTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
+      },
+      'full-stack-lite': {
+        contextTodoList: async () => factory.todoList(),
+        actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
+        outcomeTodoList: async () => factory.todoList(),
+      },
+      'integrated': {
+        contextTodoList: async () => factory.webDriverTodoList(await factory.todoList()),
+        actionTodoList: async () => factory.webDriverTodoList(await factory.todoList()),
+        outcomeTodoList: async () => factory.webDriverTodoList(await factory.todoList())
+      }
+    }
+
     Object.assign(this, assemblies[process.env.CUCUMBER_HONEYCOMB || 'memory'])
   }
 
