@@ -13,7 +13,7 @@
     "selenium-webdriver": "^3.5.0"
   },
   "scripts": {
-    "start": "node lib/start.js",
+    "start": "node lib/server/start.js",
     "memory": "./cucumber",
     "http-domain": "CUCUMBER_HONEYCOMB=http-domain ./cucumber",
     "ui-domain": "CUCUMBER_HONEYCOMB=ui-domain ./cucumber-electron",
