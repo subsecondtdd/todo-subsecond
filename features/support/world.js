@@ -8,7 +8,7 @@ const HttpTodoList = require('../../lib/HttpTodoList')
 const mountBrowserApp = require('../../lib/mountBrowserApp')
 const mountWebApp = require('../../lib/mountWebApp')
 const DomTodoList = require('../../test_support/DomTodoList')
-const BrowserTodoList = require('../../test_support/BrowserTodoList')
+const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
 
 if(process.env.CUCUMBER_DOM === 'true') {
   // This is primarily for debugging - cucumber-electron doesn't always provide
@@ -40,14 +40,14 @@ const factory = {
       })
     })
   }),
-  browserTodoList: memoize(async () => {
+  webDriverTodoList: memoize(async () => {
     const webApp = await mountWebApp({ todoList: new TodoList() })
     const port = 8898
     const baseUrl = `http://localhost:${port}`
     return new Promise((resolve, reject) => {
       webApp.listen(port, err => {
         if (err) return reject(err)
-        resolve(new BrowserTodoList(baseUrl))
+        resolve(new WebDriverTodoList(baseUrl))
       })
     })
   })
@@ -80,9 +80,9 @@ const assemblies = {
     outcomeTodoList: async () => factory.todoList(),
   },
   'integrated': {
-    contextTodoList: async () => factory.browserTodoList(),
-    actionTodoList: async () => factory.browserTodoList(),
-    outcomeTodoList: async () => factory.browserTodoList()
+    contextTodoList: async () => factory.webDriverTodoList(),
+    actionTodoList: async () => factory.webDriverTodoList(),
+    outcomeTodoList: async () => factory.webDriverTodoList()
   }
 }
 
