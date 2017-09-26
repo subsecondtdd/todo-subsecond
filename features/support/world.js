@@ -6,7 +6,7 @@ const memoize = require('map-memo')
 const TodoList = require('../../lib/TodoList')
 const HttpTodoList = require('../../lib/HttpTodoList')
 const mountBrowserApp = require('../../lib/client/mountBrowserApp')
-const mountWebApp = require('../../lib/server/mountWebApp')
+const WebApp = require('../../lib/server/WebApp')
 const DomTodoList = require('../../test_support/DomTodoList')
 const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
 
@@ -32,7 +32,7 @@ class TodoWorld {
         return new DomTodoList(domNode)
       }),
       httpTodoList: memoize(async todoList => {
-        const webApp = await mountWebApp({ todoList })
+        const webApp = await new WebApp().mount({ todoList })
         const port = 8899
         const baseUrl = `http://localhost:${port}`
         return new Promise((resolve, reject) => {
@@ -43,7 +43,7 @@ class TodoWorld {
         })
       }),
       webDriverTodoList: memoize(async todoList => {
-        const webApp = await mountWebApp({ todoList })
+        const webApp = await new WebApp().mount({ todoList })
         const port = 8898
         const baseUrl = `http://localhost:${port}`
         return new Promise((resolve, reject) => {
