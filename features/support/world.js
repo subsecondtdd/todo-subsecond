@@ -40,8 +40,8 @@ const factory = {
       })
     })
   }),
-  webDriverTodoList: memoize(async () => {
-    const webApp = await mountWebApp({ todoList: new TodoList() })
+  webDriverTodoList: memoize(async todoList => {
+    const webApp = await mountWebApp({ todoList })
     const port = 8898
     const baseUrl = `http://localhost:${port}`
     return new Promise((resolve, reject) => {
@@ -80,9 +80,9 @@ const assemblies = {
     outcomeTodoList: async () => factory.todoList(),
   },
   'integrated': {
-    contextTodoList: async () => factory.webDriverTodoList(),
-    actionTodoList: async () => factory.webDriverTodoList(),
-    outcomeTodoList: async () => factory.webDriverTodoList()
+    contextTodoList: async () => factory.webDriverTodoList(await factory.todoList()),
+    actionTodoList: async () => factory.webDriverTodoList(await factory.todoList()),
+    outcomeTodoList: async () => factory.webDriverTodoList(await factory.todoList())
   }
 }
 

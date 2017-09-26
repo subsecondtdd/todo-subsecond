@@ -1,5 +1,5 @@
 const webdriver = require('selenium-webdriver')
-const { By, until } = webdriver
+const { By } = webdriver
 
 module.exports = class WebDriverTodoList {
   constructor(baseUrl) {
