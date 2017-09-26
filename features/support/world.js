@@ -5,7 +5,7 @@ const { setWorldConstructor, After } = require('cucumber')
 const memoize = require('map-memo')
 const TodoList = require('../../lib/TodoList')
 const HttpTodoList = require('../../lib/HttpTodoList')
-const mountBrowserApp = require('../../lib/client/mountBrowserApp')
+const BrowserApp = require('../../lib/client/BrowserApp')
 const WebApp = require('../../lib/server/WebApp')
 const DomTodoList = require('../../test_support/DomTodoList')
 const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
@@ -28,30 +28,18 @@ class TodoWorld {
         const domNode = document.createElement('div')
         domNode.innerHTML = html
         document.body.appendChild(domNode)
-        await mountBrowserApp({ domNode, todoList })
+        await new BrowserApp({ domNode, todoList }).mount()
         return new DomTodoList(domNode)
       }),
       httpTodoList: memoize(async todoList => {
-        const webApp = await new WebApp().mount({ todoList })
         const port = 8899
-        const baseUrl = `http://localhost:${port}`
-        return new Promise((resolve, reject) => {
-          webApp.listen(port, err => {
-            if (err) return reject(err)
-            resolve(new HttpTodoList(baseUrl))
-          })
-        })
+        await new WebApp({ todoList, port }).listen()
+        return new HttpTodoList(`http://localhost:${port}`)
       }),
       webDriverTodoList: memoize(async todoList => {
-        const webApp = await new WebApp().mount({ todoList })
         const port = 8898
-        const baseUrl = `http://localhost:${port}`
-        return new Promise((resolve, reject) => {
-          webApp.listen(port, err => {
-            if (err) return reject(err)
-            resolve(new WebDriverTodoList(baseUrl))
-          })
-        })
+        await new WebApp({ todoList, port }).listen()
+        return new WebDriverTodoList(`http://localhost:${port}`)
       })
     }
 
