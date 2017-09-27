@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node lib/server/start.js",
-    "test": "CUCUMBER_HONEYCOMB=database ./cucumber && features/run/all",
+    "test": "features/run/all",
     "time": "time features/run/memory && time features/run/integrated"
   },
   "dependencies": {
