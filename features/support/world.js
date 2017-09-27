@@ -3,7 +3,7 @@ const path = require('path')
 
 const { setWorldConstructor, After } = require('cucumber')
 const memoize = require('map-memo')
-const TodoList = require('../../lib/TodoList')
+const TodoList = require('../../lib/server/TodoList')
 const HttpTodoList = require('../../lib/client/HttpTodoList')
 const BrowserApp = require('../../lib/client/BrowserApp')
 const WebApp = require('../../lib/server/WebApp')
@@ -20,6 +20,8 @@ if(process.env.CUCUMBER_DOM === 'true') {
 
 class TodoWorld {
   constructor() {
+    this._stoppables = []
+
     const factory = {
       todoList: memoize(async () => new TodoList()),
       domTodoList: memoize(async todoList => {
@@ -33,13 +35,17 @@ class TodoWorld {
       }),
       httpTodoList: memoize(async todoList => {
         const port = 8899
-        await new WebApp({ todoList}).listen(port)
+        const webApp = new WebApp({ todoList})
+        await webApp.listen(port)
+        this._stoppables.push(webApp)
         return new HttpTodoList(`http://localhost:${port}`)
       }),
       webDriverTodoList: memoize(async todoList => {
         const port = 8898
         await new WebApp({ todoList }).listen(port)
-        return new WebDriverTodoList(`http://localhost:${port}`)
+        let webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
+        this._stoppables.push(webDriverTodoList)
+        return webDriverTodoList
       })
     }
 
@@ -80,13 +86,7 @@ class TodoWorld {
   }
 
   async stop() {
-    return await Promise.all([
-      await this.contextTodoList(),
-      await this.actionTodoList(),
-      await this.outcomeTodoList()
-    ].map(list => {
-      return list.stop ? list.stop() : Promise.resolve()
-    }))
+    return Promise.all(this._stoppables.map(stoppable => stoppable.stop()))
   }
 }
 setWorldConstructor(TodoWorld)

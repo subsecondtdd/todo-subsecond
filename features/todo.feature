@@ -5,6 +5,11 @@ Feature: Todo
     When I add a todo to the todo list
     Then there should be 2 todos in the todo list
 
+  Scenario: Create another Todo
+    Given the todo list has 2 todos
+    When I add a todo to the todo list
+    Then there should be 3 todos in the todo list
+
   Scenario: Mark Todo Done
   Scenario: Mark Todo Undone
   Scenario: Delete Todo
