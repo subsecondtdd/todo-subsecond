@@ -33,12 +33,12 @@ class TodoWorld {
       }),
       httpTodoList: memoize(async todoList => {
         const port = 8899
-        await new WebApp({ todoList, port }).listen()
+        await new WebApp({ todoList}).listen(port)
         return new HttpTodoList(`http://localhost:${port}`)
       }),
       webDriverTodoList: memoize(async todoList => {
         const port = 8898
-        await new WebApp({ todoList, port }).listen()
+        await new WebApp({ todoList }).listen(port)
         return new WebDriverTodoList(`http://localhost:${port}`)
       })
     }
@@ -51,7 +51,7 @@ class TodoWorld {
       },
       'http-domain': {
         contextTodoList: async () => factory.todoList(),
-        actionTodoList: async () => await factory.httpTodoList(await factory.todoList()),
+        actionTodoList: async () => factory.httpTodoList(await factory.todoList()),
         outcomeTodoList: async () => factory.todoList(),
       },
       'ui-domain': {
