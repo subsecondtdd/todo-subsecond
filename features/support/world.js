@@ -85,7 +85,7 @@ class TodoWorld {
       },
       'full-stack-lite': {
         contextTodoList: async () => factory.memoryTodoList(),
-        actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.todoList())),
+        actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.memoryTodoList())),
         outcomeTodoList: async () => factory.memoryTodoList()
       },
       'integrated': {
