@@ -42,8 +42,10 @@ class TodoWorld {
       }),
       webDriverTodoList: memoize(async todoList => {
         const port = 8898
-        await new WebApp({ todoList }).listen(port)
-        let webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
+        const webApp = new WebApp({ todoList })
+        await webApp.listen(port)
+        this._stoppables.push(webApp)
+        const webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
         this._stoppables.push(webDriverTodoList)
         return webDriverTodoList
       })
