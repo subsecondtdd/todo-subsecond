@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Josh Chisholm <joshuachisholm@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "8.x"
+  },
   "devDependencies": {
     "cucumber": "^3.0.2",
     "cucumber-electron": "^2.3.1",
