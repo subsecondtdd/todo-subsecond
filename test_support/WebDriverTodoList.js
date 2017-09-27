@@ -29,9 +29,6 @@ module.exports = class WebDriverTodoList {
   }
 
   async stop() {
-    if (!this._stopped) {
-      this._stopped = true
-      await this._driver.quit()
-    }
+    await this._driver.quit()
   }
 }
