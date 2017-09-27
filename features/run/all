@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+features/run/memory && \
+features/run/http-domain && \
+features/run/ui-domain && \
+features/run/full-stack-lite && \
+features/run/full-stack && \
+features/run/integrated
