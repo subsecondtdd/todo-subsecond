@@ -15,6 +15,7 @@
   "scripts": {
     "start": "node lib/server/start.js",
     "memory": "./cucumber",
+    "database": "CUCUMBER_HONEYCOMB=database ./cucumber",
     "http-domain": "CUCUMBER_HONEYCOMB=http-domain ./cucumber",
     "ui-domain": "CUCUMBER_HONEYCOMB=ui-domain ./cucumber-electron",
     "full-stack": "CUCUMBER_HONEYCOMB=full-stack ./cucumber-electron",
@@ -28,6 +29,9 @@
     "browserify": "^14.4.0",
     "browserify-middleware": "^7.1.0",
     "express": "^4.15.4",
-    "node-fetch": "^1.7.3"
+    "node-fetch": "^1.7.3",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.11.1"
   }
 }

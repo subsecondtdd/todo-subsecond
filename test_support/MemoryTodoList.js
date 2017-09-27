@@ -1,4 +1,4 @@
-module.exports = class TodoList {
+module.exports = class MemoryTodoList {
   constructor() {
     this._items = []
   }

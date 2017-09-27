@@ -4,7 +4,7 @@ module.exports = class DomTodoList {
   }
 
   async addTodo({ text }) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this._domNode.addEventListener('todos:item:added', () => {
         resolve()
       })
