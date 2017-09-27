@@ -14,14 +14,8 @@
   },
   "scripts": {
     "start": "node lib/server/start.js",
-    "memory": "./cucumber",
-    "http-domain": "CUCUMBER_HONEYCOMB=http-domain ./cucumber",
-    "ui-domain": "CUCUMBER_HONEYCOMB=ui-domain ./cucumber-electron",
-    "full-stack": "CUCUMBER_HONEYCOMB=full-stack ./cucumber-electron",
-    "full-stack-lite": "CUCUMBER_HONEYCOMB=full-stack-lite ./cucumber-electron",
-    "integrated": "CUCUMBER_HONEYCOMB=integrated ./cucumber",
-    "test": "yarn memory && yarn http-domain && yarn ui-domain && yarn full-stack && yarn integrated",
-    "parallel": "yarn memory & yarn http-domain & yarn ui-domain & yarn full-stack & yarn integrated"
+    "test": "features/run/all",
+    "time": "time features/run/memory && time features/run/integrated"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
