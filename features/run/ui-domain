@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-CUCUMBER_HONEYCOMB=ui-domain node node_modules/.bin/cucumber-electron "$@"

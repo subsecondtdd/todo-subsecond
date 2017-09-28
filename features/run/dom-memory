@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+CUCUMBER_HONEYCOMB=dom-memory node node_modules/.bin/cucumber-electron "$@"
