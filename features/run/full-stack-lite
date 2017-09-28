@@ -1,2 +1,0 @@
-#!/usr/bin/env bash
-CUCUMBER_HONEYCOMB=full-stack-lite node node_modules/.bin/cucumber-electron "$@"

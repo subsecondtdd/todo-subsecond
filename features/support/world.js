@@ -68,27 +68,22 @@ class TodoWorld {
         actionTodoList: async () => factory.databaseTodoList(),
         outcomeTodoList: async () => factory.databaseTodoList(),
       },
-      'http-domain': {
+      'http-memory': {
         contextTodoList: async () => factory.memoryTodoList(),
         actionTodoList: async () => factory.httpTodoList(await factory.memoryTodoList()),
-        outcomeTodoList: async () => factory.memoryTodoList(),
+        outcomeTodoList: async () => factory.httpTodoList(await factory.memoryTodoList()),
       },
-      'ui-domain': {
+      'dom-memory': {
         contextTodoList: async () => factory.memoryTodoList(),
         actionTodoList: async () => factory.domTodoList(await factory.memoryTodoList()),
         outcomeTodoList: async () => factory.domTodoList(await factory.memoryTodoList()),
       },
-      'full-stack': {
+      'dom-http-memory': {
         contextTodoList: async () => factory.memoryTodoList(),
         actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.memoryTodoList())),
         outcomeTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.memoryTodoList())),
       },
-      'full-stack-lite': {
-        contextTodoList: async () => factory.memoryTodoList(),
-        actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.memoryTodoList())),
-        outcomeTodoList: async () => factory.memoryTodoList()
-      },
-      'integrated': {
+      'webdriver-database': {
         contextTodoList: async () => await factory.databaseTodoList(),
         actionTodoList: async () => factory.webDriverTodoList(await factory.databaseTodoList()),
         outcomeTodoList: async () => factory.webDriverTodoList(await factory.databaseTodoList())
