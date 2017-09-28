@@ -89,7 +89,7 @@ class TodoWorld {
         outcomeTodoList: async () => factory.memoryTodoList()
       },
       'integrated': {
-        contextTodoList: async () => factory.webDriverTodoList(await factory.databaseTodoList()),
+        contextTodoList: async () => await factory.databaseTodoList(),
         actionTodoList: async () => factory.webDriverTodoList(await factory.databaseTodoList()),
         outcomeTodoList: async () => factory.webDriverTodoList(await factory.databaseTodoList())
       }
