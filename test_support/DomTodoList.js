@@ -5,7 +5,7 @@ module.exports = class DomTodoList {
 
   async addTodo({ text }) {
     return new Promise((resolve) => {
-      this._domNode.addEventListener('todos:item:added', () => {
+      this._domNode.addEventListener('todos:todo:added', () => {
         resolve()
       })
 
@@ -14,8 +14,7 @@ module.exports = class DomTodoList {
     })
   }
 
-  async getItems() {
-    const itemNodes = [...this._domNode.querySelector('[aria-label="Todos"]').querySelectorAll('li')]
-    return itemNodes
+  async getTodos() {
+    return [...this._domNode.querySelectorAll('[aria-label="Todos"] li')]
   }
 }

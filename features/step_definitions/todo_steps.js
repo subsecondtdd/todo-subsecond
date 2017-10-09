@@ -14,6 +14,6 @@ When('I add a todo to the todo list', async function () {
 
 Then('there should be {int} todos in the todo list', async function (count) {
   const todoList = await this.outcomeTodoList()
-  const items = await todoList.getItems()
-  assert.equal(items.length, count)
+  const todos = await todoList.getTodos()
+  assert.equal(todos.length, count)
 })

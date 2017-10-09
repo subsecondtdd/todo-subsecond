@@ -18,12 +18,12 @@ module.exports = class WebDriverTodoList {
     }
     const textField = this._driver.findElement(By.css('[aria-label="New Todo Text"]'))
     await textField.sendKeys(text)
-    const count = (await this.getItems()).length
+    const count = (await this.getTodos()).length
     await this._driver.findElement(By.css('[aria-label="Add Todo"]')).click()
-    await this._driver.wait(async () => (await this.getItems()).length > count, 10000)
+    await this._driver.wait(async () => (await this.getTodos()).length > count, 10000)
   }
 
-  async getItems() {
+  async getTodos() {
     return this._driver.executeScript(() =>
       [].slice.apply(document.querySelectorAll('[aria-label="Todos"] li')).map(li => li.innerText))
   }

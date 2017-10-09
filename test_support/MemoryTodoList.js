@@ -1,13 +1,13 @@
 module.exports = class MemoryTodoList {
   constructor() {
-    this._items = []
+    this._todos = []
   }
 
   async addTodo({ text }) {
-    this._items.push({ text })
+    this._todos.push({ text })
   }
 
-  async getItems() {
-    return this._items
+  async getTodos() {
+    return this._todos
   }
 }
