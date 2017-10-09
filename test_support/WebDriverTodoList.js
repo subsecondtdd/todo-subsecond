@@ -7,15 +7,13 @@ module.exports = class WebDriverTodoList {
     this._driver = new webdriver.Builder()
       .forBrowser('chrome')
       .build()
+  }
 
-    this._visited = false
+  async start() {
+    await this._driver.get(this._baseUrl + '/')
   }
 
   async addTodo({ text }) {
-    if (!this._visited) {
-      await this._driver.get(this._baseUrl + '/')
-      this._visited = true
-    }
     const textField = this._driver.findElement(By.css('[aria-label="New Todo Text"]'))
     await textField.sendKeys(text)
     const count = (await this.getTodos()).length
