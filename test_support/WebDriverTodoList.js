@@ -25,7 +25,10 @@ module.exports = class WebDriverTodoList {
 
   async getTodos() {
     return this._driver.executeScript(() =>
-      [].slice.apply(document.querySelectorAll('[aria-label="Todos"] li')).map(li => li.innerText))
+      [...document.querySelectorAll('[aria-label="Todos"] li label')].map(label => ({
+        text: label.innerText
+      }))
+    )
   }
 
   async stop() {

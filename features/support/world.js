@@ -19,6 +19,9 @@ if(process.env.CUCUMBER_DOM === 'true') {
   global.document = dom.window.document
 }
 
+const assembly = process.env.CUCUMBER_ASSEMBLY || 'memory'
+console.log(`🥒  ${assembly}`)
+
 class TodoWorld {
   constructor() {
     this._stoppables = []
@@ -92,7 +95,7 @@ class TodoWorld {
       }
     }
 
-    Object.assign(this, assemblies[process.env.CUCUMBER_ASSEMBLY || 'memory'])
+    Object.assign(this, assemblies[assembly])
   }
 }
 setWorldConstructor(TodoWorld)

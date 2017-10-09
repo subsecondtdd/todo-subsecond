@@ -15,6 +15,8 @@ module.exports = class DomTodoList {
   }
 
   async getTodos() {
-    return [...this._domNode.querySelectorAll('[aria-label="Todos"] li')]
+    return [...this._domNode.querySelectorAll('[aria-label="Todos"] li label')].map(label => ({
+      text: label.innerText
+    }))
   }
 }
