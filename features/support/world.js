@@ -92,7 +92,7 @@ class TodoWorld {
       }
     }
 
-    Object.assign(this, assemblies[process.env.CUCUMBER_HONEYCOMB || 'memory'])
+    Object.assign(this, assemblies[process.env.CUCUMBER_ASSEMBLY || 'memory'])
   }
 }
 setWorldConstructor(TodoWorld)

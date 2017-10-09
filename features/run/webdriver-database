@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-CUCUMBER_HONEYCOMB=webdriver-database node node_modules/.bin/cucumber.js "$@"
+CUCUMBER_ASSEMBLY=webdriver-database node node_modules/.bin/cucumber.js "$@"
