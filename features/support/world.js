@@ -23,70 +23,72 @@ class TodoWorld {
   constructor() {
     this._stoppables = []
 
-    const factory = {
-      memoryTodoList: memoize(async () => new MemoryTodoList()),
-      domTodoList: memoize(async todoList => {
-        const publicIndexHtmlPath = path.join(__dirname, '..', '..', 'public', 'index.html')
-        const html = fs.readFileSync(publicIndexHtmlPath, 'utf-8')
-        const domNode = document.createElement('div')
-        domNode.innerHTML = html
-        document.body.appendChild(domNode)
-        await new BrowserApp({ domNode, todoList }).mount()
-        return new DomTodoList(domNode)
-      }),
-      databaseTodoList: memoize(async() => {
-        const databaseTodoList = new DatabaseTodoList()
-        await databaseTodoList.start(true)
-        return databaseTodoList
-      }),
-      httpTodoList: memoize(async todoList => {
-        const port = 8899
-        const webApp = new WebApp({ todoList, serveClient: false })
-        await webApp.listen(port)
-        this._stoppables.push(webApp)
-        return new HttpTodoList(`http://localhost:${port}`)
-      }),
-      webDriverTodoList: memoize(async todoList => {
-        const port = 8898
-        const webApp = new WebApp({ todoList, serveClient: true })
-        await webApp.listen(port)
-        this._stoppables.push(webApp)
-        const webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
-        this._stoppables.push(webDriverTodoList)
-        return webDriverTodoList
-      })
-    }
+    const memoryTodoList = memoize(async () => new MemoryTodoList())
+
+    const domTodoList = memoize(async todoList => {
+      const publicIndexHtmlPath = path.join(__dirname, '..', '..', 'public', 'index.html')
+      const html = fs.readFileSync(publicIndexHtmlPath, 'utf-8')
+      const domNode = document.createElement('div')
+      domNode.innerHTML = html
+      document.body.appendChild(domNode)
+      await new BrowserApp({ domNode, todoList }).mount()
+      return new DomTodoList(domNode)
+    })
+
+    const databaseTodoList = memoize(async() => {
+      const databaseTodoList = new DatabaseTodoList()
+      await databaseTodoList.start(true)
+      return databaseTodoList
+    })
+
+    const httpTodoList = memoize(async todoList => {
+      const port = 8899
+      const webApp = new WebApp({ todoList, serveClient: false })
+      await webApp.listen(port)
+      this._stoppables.push(webApp)
+      return new HttpTodoList(`http://localhost:${port}`)
+    })
+
+    const webDriverTodoList = memoize(async todoList => {
+      const port = 8898
+      const webApp = new WebApp({ todoList, serveClient: true })
+      await webApp.listen(port)
+      this._stoppables.push(webApp)
+      const webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
+      this._stoppables.push(webDriverTodoList)
+      return webDriverTodoList
+    })
 
     const assemblies = {
       'memory': {
-        contextTodoList: async () => factory.memoryTodoList(),
-        actionTodoList: async () => factory.memoryTodoList(),
-        outcomeTodoList: async () => factory.memoryTodoList(),
+        contextTodoList: async () => memoryTodoList(),
+        actionTodoList: async () => memoryTodoList(),
+        outcomeTodoList: async () => memoryTodoList(),
       },
       'database': {
-        contextTodoList: async () => factory.databaseTodoList(),
-        actionTodoList: async () => factory.databaseTodoList(),
-        outcomeTodoList: async () => factory.databaseTodoList(),
+        contextTodoList: async () => databaseTodoList(),
+        actionTodoList: async () => databaseTodoList(),
+        outcomeTodoList: async () => databaseTodoList(),
       },
       'http-memory': {
-        contextTodoList: async () => factory.memoryTodoList(),
-        actionTodoList: async () => factory.httpTodoList(await factory.memoryTodoList()),
-        outcomeTodoList: async () => factory.httpTodoList(await factory.memoryTodoList()),
+        contextTodoList: async () => memoryTodoList(),
+        actionTodoList: async () => httpTodoList(await memoryTodoList()),
+        outcomeTodoList: async () => httpTodoList(await memoryTodoList()),
       },
       'dom-memory': {
-        contextTodoList: async () => factory.memoryTodoList(),
-        actionTodoList: async () => factory.domTodoList(await factory.memoryTodoList()),
-        outcomeTodoList: async () => factory.domTodoList(await factory.memoryTodoList()),
+        contextTodoList: async () => memoryTodoList(),
+        actionTodoList: async () => domTodoList(await memoryTodoList()),
+        outcomeTodoList: async () => domTodoList(await memoryTodoList()),
       },
       'dom-http-memory': {
-        contextTodoList: async () => factory.memoryTodoList(),
-        actionTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.memoryTodoList())),
-        outcomeTodoList: async () => factory.domTodoList(await factory.httpTodoList(await factory.memoryTodoList())),
+        contextTodoList: async () => memoryTodoList(),
+        actionTodoList: async () => domTodoList(await httpTodoList(await memoryTodoList())),
+        outcomeTodoList: async () => domTodoList(await httpTodoList(await memoryTodoList())),
       },
       'webdriver-database': {
-        contextTodoList: async () => factory.databaseTodoList(),
-        actionTodoList: async () => factory.webDriverTodoList(await factory.databaseTodoList()),
-        outcomeTodoList: async () => factory.webDriverTodoList(await factory.databaseTodoList())
+        contextTodoList: async () => databaseTodoList(),
+        actionTodoList: async () => webDriverTodoList(await databaseTodoList()),
+        outcomeTodoList: async () => webDriverTodoList(await databaseTodoList())
       }
     }
 
