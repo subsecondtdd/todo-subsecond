@@ -24,11 +24,12 @@ console.log(`🥒  ${assembly}`)
 
 class TodoWorld {
   constructor() {
+    this._truncate = true
     this._stoppables = []
 
     const memoryTodoList = memoize(async () => new MemoryTodoList())
 
-    const domTodoList = memoize(async todoList => {
+    const domTodoList = async todoList => {
       const publicIndexHtmlPath = path.join(__dirname, '..', '..', 'public', 'index.html')
       const html = fs.readFileSync(publicIndexHtmlPath, 'utf-8')
       const domNode = document.createElement('div')
@@ -36,26 +37,26 @@ class TodoWorld {
       document.body.appendChild(domNode)
       await new BrowserApp({ domNode, todoList }).mount()
       return new DomTodoList(domNode)
-    })
+    }
 
-    const databaseTodoList = memoize(async() => {
+    const databaseTodoList = async() => {
       const databaseTodoList = new DatabaseTodoList()
-      await databaseTodoList.start(true)
+      await databaseTodoList.start(this._truncate)
+      this._truncate = false
       return databaseTodoList
-    })
+    }
 
-    const httpTodoList = memoize(async todoList => {
-      const port = 8899
-      const webApp = new WebApp({ todoList, serveClient: false })
-      await webApp.listen(port)
+    const httpTodoList = memoize(async webApppTodoList => {
+      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: false })
+      const port = await webApp.listen(0)
       this._stoppables.push(webApp)
       return new HttpTodoList(`http://localhost:${port}`)
     })
 
-    const webDriverTodoList = memoize(async todoList => {
-      const port = 8898
-      const webApp = new WebApp({ todoList, serveClient: true })
-      await webApp.listen(port)
+    const webDriverTodoList = memoize(async webApppTodoList => {
+      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
+      const port = await webApp.listen(0)
+      console.log('PORT', port)
       this._stoppables.push(webApp)
       const webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
       this._stoppables.push(webDriverTodoList)
@@ -92,6 +93,11 @@ class TodoWorld {
         contextTodoList: async () => databaseTodoList(),
         actionTodoList: async () => webDriverTodoList(await databaseTodoList()),
         outcomeTodoList: async () => webDriverTodoList(await databaseTodoList())
+      },
+      'webdriver-memory': {
+        contextTodoList: async () => memoryTodoList(),
+        actionTodoList: async () => webDriverTodoList(await memoryTodoList()),
+        outcomeTodoList: async () => webDriverTodoList(await memoryTodoList())
       }
     }
 
