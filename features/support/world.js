@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const { setWorldConstructor, Before, After } = require('cucumber')
+const { setWorldConstructor, After } = require('cucumber')
 const memoize = require('map-memo')
 const DatabaseTodoList = require('../../lib/server/DatabaseTodoList')
 const HttpTodoList = require('../../lib/client/HttpTodoList')
