@@ -11,7 +11,7 @@ const MemoryTodoList = require('../../test_support/MemoryTodoList')
 const DomTodoList = require('../../test_support/DomTodoList')
 const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
 
-if(process.env.CUCUMBER_DOM === 'true') {
+if (process.env.CUCUMBER_DOM === 'true') {
   // This is primarily for debugging - cucumber-electron doesn't always provide
   // good error messages (because of Electron?)
   const { JSDOM } = require("jsdom")
@@ -39,7 +39,7 @@ class TodoWorld {
       return new DomTodoList(domNode)
     }
 
-    const databaseTodoList = async() => {
+    const databaseTodoList = async () => {
       const databaseTodoList = new DatabaseTodoList()
       await databaseTodoList.start(this._truncate)
       this._truncate = false
@@ -104,8 +104,9 @@ class TodoWorld {
     Object.assign(this, assemblies[assembly])
   }
 }
+
 setWorldConstructor(TodoWorld)
 
-After(async function () {
+After(async function() {
   return Promise.all(this._stoppables.map(stoppable => stoppable.stop()))
 })
