@@ -97,12 +97,12 @@ class TodoWorld {
         outcomeTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList())
       },
       'webdriver-memory': {
-        contextTodoList: async () => memoryTodoList(),
+        contextTodoList: async () => memoryTodoList,
         actionTodoList: async () => makeWebDriverTodoList(memoryTodoList),
         outcomeTodoList: async () => makeWebDriverTodoList(memoryTodoList)
       },
       'browserstack-memory': {
-        contextTodoList: async () => memoryTodoList(),
+        contextTodoList: async () => memoryTodoList,
         actionTodoList: async () => makeBrowserStackTodoList(memoryTodoList),
         outcomeTodoList: async () => makeBrowserStackTodoList(memoryTodoList)
       }
