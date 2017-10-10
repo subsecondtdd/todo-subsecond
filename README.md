@@ -28,6 +28,13 @@ Or:
 
     ./features/run/all # See other scrips in the same directory
 
+### Change browser
+
+The `webdriver-*` assemblies will use Chrome by default. You can change to another browser if you want:
+
+    export SELENIUM_BROWSER=firefox
+    brew install geckodriver
+
 ## Run the server
 
     npm start
