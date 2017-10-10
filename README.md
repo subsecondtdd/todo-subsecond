@@ -26,7 +26,7 @@ If you have Postgres installed you can use that. Otherwise you can use SQlite.
 
 Or:
 
-    ./features/run/all # See other scrips in the same directory
+    ./features/run/all # See other scripts in the same directory
 
 ### Change browser
 
