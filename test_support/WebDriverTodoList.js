@@ -4,15 +4,17 @@ const { By, until } = webdriver
 module.exports = class WebDriverTodoList {
   constructor(baseUrl) {
     this._baseUrl = baseUrl
-    this._driver = new webdriver.Builder()
-      .forBrowser('chrome')
-      .build()
+    this._driver = this.buildDriver(new webdriver.Builder()).build()
+  }
+
+  buildDriver(builder) {
+    return builder.forBrowser('chrome')
   }
 
   async start() {
     await this._driver.get(this._baseUrl + '/')
     const todoListLocator = By.css('[aria-label="Todos"] ol')
-    await this._driver.wait(until.elementLocated(todoListLocator), 5000)
+    await this._driver.wait(until.elementLocated(todoListLocator), 7000)
   }
 
   async addTodo({ text }) {
@@ -20,7 +22,7 @@ module.exports = class WebDriverTodoList {
     await textField.sendKeys(text)
     const count = (await this.getTodos()).length
     await this._driver.findElement(By.css('[aria-label="Add Todo"]')).click()
-    await this._driver.wait(async () => (await this.getTodos()).length > count, 5000)
+    await this._driver.wait(async () => (await this.getTodos()).length > count, 7000)
   }
 
   async getTodos() {
