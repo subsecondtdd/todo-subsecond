@@ -1,3 +1,4 @@
+@echo off
 call features\run\memory
 if %errorlevel% neq 0 exit /b %errorlevel%
 call features\run\dom-memory
