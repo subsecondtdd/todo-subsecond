@@ -12,7 +12,6 @@
     "cucumber-electron": "^2.3.1",
     "electron": "^1.7.6",
     "jsdom": "^11.2.0",
-    "map-memo": "^2.1.1",
     "selenium-webdriver": "^3.5.0"
   },
   "scripts": {
