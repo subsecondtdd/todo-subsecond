@@ -11,7 +11,6 @@
     "cucumber": "^3.0.2",
     "cucumber-electron": "^2.3.1",
     "electron": "^1.7.6",
-    "jsdom": "^11.2.0",
     "selenium-webdriver": "^3.5.0"
   },
   "scripts": {

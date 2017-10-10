@@ -11,14 +11,6 @@ const DomTodoList = require('../../test_support/DomTodoList')
 const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
 const BrowserStackTodoList = require('../../test_support/BrowserStackTodoList')
 
-if (process.env.CUCUMBER_DOM === 'true') {
-  // This is primarily for debugging - cucumber-electron doesn't always provide
-  // good error messages (because of Electron?)
-  const { JSDOM } = require("jsdom")
-  const dom = new JSDOM(`<!DOCTYPE html>`)
-  global.document = dom.window.document
-}
-
 const assembly = process.env.CUCUMBER_ASSEMBLY || 'memory'
 console.log(`🥒  ${assembly}`)
 
