@@ -9,6 +9,7 @@ const WebApp = require('../../lib/server/WebApp')
 const MemoryTodoList = require('../../test_support/MemoryTodoList')
 const DomTodoList = require('../../test_support/DomTodoList')
 const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
+const BrowserStackTodoList = require('../../test_support/BrowserStackTodoList')
 
 if (process.env.CUCUMBER_DOM === 'true') {
   // This is primarily for debugging - cucumber-electron doesn't always provide
@@ -62,6 +63,16 @@ class TodoWorld {
       return webDriverTodoList
     }
 
+    const makeBrowserStackTodoList = async webApppTodoList => {
+      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
+      const port = await webApp.listen(0)
+      this._stoppables.push(webApp)
+      const browserStackTodoList = new BrowserStackTodoList(`http://localhost:${port}`)
+      await browserStackTodoList.start()
+      this._stoppables.push(browserStackTodoList)
+      return browserStackTodoList
+    }
+
     const assemblies = {
       'memory': {
         contextTodoList: async () => memoryTodoList,
@@ -94,9 +105,14 @@ class TodoWorld {
         outcomeTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList())
       },
       'webdriver-memory': {
-        contextTodoList: async () => memoryTodoList,
+        contextTodoList: async () => memoryTodoList(),
         actionTodoList: async () => makeWebDriverTodoList(memoryTodoList),
         outcomeTodoList: async () => makeWebDriverTodoList(memoryTodoList)
+      },
+      'browserstack-memory': {
+        contextTodoList: async () => memoryTodoList(),
+        actionTodoList: async () => makeBrowserStackTodoList(memoryTodoList),
+        outcomeTodoList: async () => makeBrowserStackTodoList(memoryTodoList)
       }
     }
 
