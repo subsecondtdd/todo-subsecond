@@ -1,8 +1,8 @@
-features\run\memory
-features\run\dom-memory
-features\run\http-memory
-features\run\dom-http-memory
-features\run\database
-features\run\webdriver-memory
-features\run\webdriver-database
-features\run\browserstack-memory
+call features\run\memory
+call features\run\dom-memory
+call features\run\http-memory
+call features\run\dom-http-memory
+call features\run\database
+call features\run\webdriver-memory
+call features\run\webdriver-database
+call features\run\browserstack-memory
