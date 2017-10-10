@@ -4,6 +4,10 @@
 
 * [Node.js](https://nodejs.org/en/download/)
 
+## Install dependencies
+
+    npm install
+
 ## Create Database
 
 If you have Postgres installed you can use that. Otherwise you can use SQlite (does not require a separate installation).
@@ -14,28 +18,40 @@ If you have Postgres installed you can use that. Otherwise you can use SQlite (d
 
 ### SQlite
 
-    # Windows users: Use SET instead of export
+    # Linux/OSX:
     export DATABASE_URL=sqlite:./todo-subsecond.sqlite
 
-## Install dependencies
-
-    npm install
+    # Windows:
+    set DATABASE_URL=sqlite:./todo-subsecond.sqlite
 
 ## Run tests
 
-    npm test
+Run all the tests in a single command:
 
-Or:
+    # Linux/OSX:
+    features/run/all
 
-    ./features/run/all # See other scripts in the same directory
+    # Windows:
+    features\run\all
+
+Or just one assembly at a time:
+
+    # Linux/OSX:
+    features/run/memory
+
+    # Windows:
+    features\run\memory
 
 ### Change browser
 
 The `webdriver-*` assemblies will use Chrome by default. You can change to another browser if you want:
 
-    # Windows users: Use SET instead of export
-    export SELENIUM_BROWSER=firefox
+    # Linux/OSX:
     brew install geckodriver
+    export SELENIUM_BROWSER=firefox
+
+    # Windows:
+    set SELENIUM_BROWSER=firefox
 
 ## Run the server
 
