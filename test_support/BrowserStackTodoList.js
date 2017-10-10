@@ -6,10 +6,10 @@ module.exports = class BrowserStackTodoList extends WebDriverTodoList {
     return builder
       .usingServer('http://hub-cloud.browserstack.com/wd/hub')
       .withCapabilities({
-        'browserName' : 'firefox',
-        'browserstack.user' : process.env.BROWSERSTACK_USER,
-        'browserstack.key' : process.env.BROWSERSTACK_KEY,
-        'browserstack.local' : 'true'
+        'browserName': 'firefox',
+        'browserstack.user': process.env.BROWSERSTACK_USER,
+        'browserstack.key': process.env.BROWSERSTACK_KEY,
+        'browserstack.local': 'true'
       })
   }
 

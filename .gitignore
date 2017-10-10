@@ -1,3 +1,5 @@
 node_modules
 local.log
 browserstack.err
+.DS_Store
+todo-subsecond.sqlite

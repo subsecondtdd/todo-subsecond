@@ -1,8 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const { setWorldConstructor, Before, After } = require('cucumber')
-const memoize = require('map-memo')
+const { setWorldConstructor, After } = require('cucumber')
 const DatabaseTodoList = require('../../lib/server/DatabaseTodoList')
 const HttpTodoList = require('../../lib/client/HttpTodoList')
 const BrowserApp = require('../../lib/client/BrowserApp')
@@ -12,7 +11,7 @@ const DomTodoList = require('../../test_support/DomTodoList')
 const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
 const BrowserStackTodoList = require('../../test_support/BrowserStackTodoList')
 
-if(process.env.CUCUMBER_DOM === 'true') {
+if (process.env.CUCUMBER_DOM === 'true') {
   // This is primarily for debugging - cucumber-electron doesn't always provide
   // good error messages (because of Electron?)
   const { JSDOM } = require("jsdom")
@@ -28,9 +27,9 @@ class TodoWorld {
     this._truncate = true
     this._stoppables = []
 
-    const memoryTodoList = memoize(async () => new MemoryTodoList())
+    const memoryTodoList = new MemoryTodoList()
 
-    const domTodoList = async todoList => {
+    const makeDomTodoList = async todoList => {
       const publicIndexHtmlPath = path.join(__dirname, '..', '..', 'public', 'index.html')
       const html = fs.readFileSync(publicIndexHtmlPath, 'utf-8')
       const domNode = document.createElement('div')
@@ -40,21 +39,21 @@ class TodoWorld {
       return new DomTodoList(domNode)
     }
 
-    const databaseTodoList = async() => {
+    const makeDatabaseTodoList = async () => {
       const databaseTodoList = new DatabaseTodoList()
       await databaseTodoList.start(this._truncate)
       this._truncate = false
       return databaseTodoList
     }
 
-    const httpTodoList = memoize(async webApppTodoList => {
+    const makeHttpTodoList = async webApppTodoList => {
       const webApp = new WebApp({ todoList: webApppTodoList, serveClient: false })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
       return new HttpTodoList(`http://localhost:${port}`)
-    })
+    }
 
-    const webDriverTodoList = memoize(async webApppTodoList => {
+    const makeWebDriverTodoList = async webApppTodoList => {
       const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
@@ -62,9 +61,9 @@ class TodoWorld {
       await webDriverTodoList.start()
       this._stoppables.push(webDriverTodoList)
       return webDriverTodoList
-    })
+    }
 
-    const browserStackTodoList = memoize(async webApppTodoList => {
+    const makeBrowserStackTodoList = async webApppTodoList => {
       const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
@@ -72,56 +71,57 @@ class TodoWorld {
       await browserStackTodoList.start()
       this._stoppables.push(browserStackTodoList)
       return browserStackTodoList
-    })
+    }
 
     const assemblies = {
       'memory': {
-        contextTodoList: async () => memoryTodoList(),
-        actionTodoList: async () => memoryTodoList(),
-        outcomeTodoList: async () => memoryTodoList(),
+        contextTodoList: async () => memoryTodoList,
+        actionTodoList: async () => memoryTodoList,
+        outcomeTodoList: async () => memoryTodoList,
       },
       'database': {
-        contextTodoList: async () => databaseTodoList(),
-        actionTodoList: async () => databaseTodoList(),
-        outcomeTodoList: async () => databaseTodoList(),
+        contextTodoList: async () => makeDatabaseTodoList(),
+        actionTodoList: async () => makeDatabaseTodoList(),
+        outcomeTodoList: async () => makeDatabaseTodoList(),
       },
       'http-memory': {
-        contextTodoList: async () => memoryTodoList(),
-        actionTodoList: async () => httpTodoList(await memoryTodoList()),
-        outcomeTodoList: async () => httpTodoList(await memoryTodoList()),
+        contextTodoList: async () => memoryTodoList,
+        actionTodoList: async () => makeHttpTodoList(memoryTodoList),
+        outcomeTodoList: async () => makeHttpTodoList(memoryTodoList),
       },
       'dom-memory': {
-        contextTodoList: async () => memoryTodoList(),
-        actionTodoList: async () => domTodoList(await memoryTodoList()),
-        outcomeTodoList: async () => domTodoList(await memoryTodoList()),
+        contextTodoList: async () => memoryTodoList,
+        actionTodoList: async () => makeDomTodoList(memoryTodoList),
+        outcomeTodoList: async () => makeDomTodoList(memoryTodoList),
       },
       'dom-http-memory': {
-        contextTodoList: async () => memoryTodoList(),
-        actionTodoList: async () => domTodoList(await httpTodoList(await memoryTodoList())),
-        outcomeTodoList: async () => domTodoList(await httpTodoList(await memoryTodoList())),
+        contextTodoList: async () => memoryTodoList,
+        actionTodoList: async () => makeDomTodoList(await makeHttpTodoList(memoryTodoList)),
+        outcomeTodoList: async () => makeDomTodoList(await makeHttpTodoList(memoryTodoList)),
       },
       'webdriver-database': {
-        contextTodoList: async () => databaseTodoList(),
-        actionTodoList: async () => webDriverTodoList(await databaseTodoList()),
-        outcomeTodoList: async () => webDriverTodoList(await databaseTodoList())
+        contextTodoList: async () => makeDatabaseTodoList(),
+        actionTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList()),
+        outcomeTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList())
       },
       'webdriver-memory': {
         contextTodoList: async () => memoryTodoList(),
-        actionTodoList: async () => webDriverTodoList(await memoryTodoList()),
-        outcomeTodoList: async () => webDriverTodoList(await memoryTodoList())
+        actionTodoList: async () => makeWebDriverTodoList(memoryTodoList),
+        outcomeTodoList: async () => makeWebDriverTodoList(memoryTodoList)
       },
       'browserstack-memory': {
         contextTodoList: async () => memoryTodoList(),
-        actionTodoList: async () => browserStackTodoList(await memoryTodoList()),
-        outcomeTodoList: async () => browserStackTodoList(await memoryTodoList())
+        actionTodoList: async () => makeBrowserStackTodoList(memoryTodoList),
+        outcomeTodoList: async () => makeBrowserStackTodoList(memoryTodoList)
       }
     }
 
     Object.assign(this, assemblies[assembly])
   }
 }
+
 setWorldConstructor(TodoWorld)
 
-After(async function () {
+After(async function() {
   return Promise.all(this._stoppables.map(stoppable => stoppable.stop()))
 })
