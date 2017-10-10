@@ -6,7 +6,7 @@
 
 ## Create Database
 
-If you have Postgres installed you can use that. Otherwise you can use SQlite.
+If you have Postgres installed you can use that. Otherwise you can use SQlite (does not require a separate installation).
 
 ### Postgres
 
@@ -14,6 +14,7 @@ If you have Postgres installed you can use that. Otherwise you can use SQlite.
 
 ### SQlite
 
+    # Windows users: Use SET instead of export
     export DATABASE_URL=sqlite:./todo-subsecond.sqlite
 
 ## Install dependencies
@@ -32,6 +33,7 @@ Or:
 
 The `webdriver-*` assemblies will use Chrome by default. You can change to another browser if you want:
 
+    # Windows users: Use SET instead of export
     export SELENIUM_BROWSER=firefox
     brew install geckodriver
 
