@@ -14,8 +14,8 @@ When('I add {string}', async function (text) {
   await todoList.addTodo({ text })
 })
 
-Then('the text of the {int}st/nd/th todo should be {string}', async function (todoNumber, text) {
+Then('the text of the {ordinal} todo should be {string}', async function (index, text) {
   const todoList = await this.outcomeTodoList()
   const todos = await todoList.getTodos()
-  assert.equal(todos[todoNumber-1].text, text)
+  assert.equal(todos[index].text, text)
 })
