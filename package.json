@@ -28,6 +28,7 @@
     "node-fetch": "^1.7.3",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^4.11.1"
+    "sequelize": "^4.11.1",
+    "sqlite3": "^3.1.13"
   }
 }
