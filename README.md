@@ -31,9 +31,11 @@ happening *inside* each block.
 
     npm install
 
-## Create Database
+## Create a database
 
-If you have Postgres installed you can use that. Otherwise you can use SQlite (does not require a separate installation).
+Although this repository is intended as a demonstration of a design pattern, we want it to be as realistic as possible. So ideally you should use a database that you might use in production, like the [instance we deployed with a a postgres database](https://todo-subsecond.herokuapp.com).
+
+If you have Postgres installed you can use that. Otherwise you can use SQlite (this is simpler as it does not require a separate installation):
 
 ### Postgres
 
