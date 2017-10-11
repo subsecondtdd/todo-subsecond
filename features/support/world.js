@@ -91,7 +91,7 @@ class TodoWorld {
         actionTodoList: async () => makeDomTodoList(await makeHttpTodoList(memoryTodoList)),
         outcomeTodoList: async () => makeDomTodoList(await makeHttpTodoList(memoryTodoList)),
       },
-      'webdriver-database': {
+      'webdriver-http-database': {
         contextTodoList: async () => makeDatabaseTodoList(),
         actionTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList()),
         outcomeTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList())
