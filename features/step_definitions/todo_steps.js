@@ -1,7 +1,7 @@
 const assert = require('assert')
 const { Given, When, Then, setDefaultTimeout } = require('cucumber')
 
-setDefaultTimeout(30000)
+setDefaultTimeout(60000)
 
 Given('there is/are already {int} todo(s)', async function(count) {
   const todoList = await this.contextTodoList()
