@@ -3,8 +3,14 @@
 This is a tiny application that illustrates how to run acceptance tests in
 milliseconds.
 
-This is possible by designing the application as well as the tests using
-interfaces/contracts that allows the application to be assembled in different ways.
+A test can be represented by a block that can be connected via a particular interface:
+
+![lego](docs/test.png)
+
+Various parts of the application as well as additional test code implement this
+interface/contract:
+
+![lego](docs/lego.png)
 
 There are three kinds of blocks:
 
@@ -12,10 +18,8 @@ There are three kinds of blocks:
 * Blue blocks represent *application code*
 * Pink blocks represent *infrastructure*
 
-![lego](docs/lego.png)
-
-The tests can then be connected to the top of this stack of blocks and test the
-application in different configurations.
+Tests can be connected to the top of any stack of blocks and test different assemblies
+of the application.
 
 A tall stack of blocks gives more confidence at the cost of speed.
 
