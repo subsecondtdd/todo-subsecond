@@ -4,7 +4,13 @@ This is a tiny application that illustrates how to run acceptance tests in
 milliseconds.
 
 This is possible by designing the application as well as the tests using
-interfaces/contracts that allows the application to be assembled in different ways:
+interfaces/contracts that allows the application to be assembled in different ways.
+
+There are three kinds of blocks:
+
+* Green blocks represent *test code*
+* Blue blocks represent *application code*
+* Pink blocks represent *infrastructure*
 
 ![lego](docs/lego.png)
 
