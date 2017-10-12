@@ -20,7 +20,7 @@ Through a series of exercises you'll get familiar with a particular way of doing
 
 ## Create a database
 
-Although this repository is intended as a demonstration of a design pattern, we want it to be as realistic as possible. So ideally you should use a database that you might use in production, like the [instance we deployed with a Postgres database](https://todo-subsecond.herokuapp.com).
+Although this repository is intended as a demonstration of a design pattern, we want it to be as realistic as possible. So ideally you should use a database that you might use in production, like the [instance we deployed with a postgres database](https://todo-subsecond.herokuapp.com).
 
 If you have Postgres installed you can use that. Otherwise you can use SQlite (this is simpler as it does not require a separate installation):
 
