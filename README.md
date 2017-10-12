@@ -7,8 +7,20 @@ Through a series of exercises you'll get familiar with a particular way of doing
 
 1. Small increments. Work at a single layer at a time.
 2. Fast (sub-second) feedback loop.
-3. Testing above the UI without the typical drawbacks (slow, brittle).
-4. UI-agnostic scenarios. Describe system behaviour rather than implemention.
+3. UI-agnostic scenarios. Describe system behaviour rather than implemention.
+4. Testing through the UI without the typical drawbacks (slow, brittle).
+
+Fast and stable full-stack tests that go through the UI are possible when the following criteria are satisfied:
+
+* No I/O whatsoever
+  * No I/O between your test and a browser automation tool like Selenium WebDriver
+  * No I/O between Selenium WebDriver and a browser
+  * No I/O between the browser application and the server
+  * No I/O between the server and a database
+* Clearly defined interfaces/contracts that allow swapping out the slow I/O bound components above
+* UI and server run in the same process
+  * This is possible thanks to [cucumber-electron](https://github.com/cucumber/cucumber-electron)
+* Tests/Scenarios are decoupled from the UI, allowing the UI to change with minimal impact on tests
 
 ## Install Software
 
