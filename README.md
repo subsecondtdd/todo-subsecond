@@ -71,8 +71,11 @@ The application is a small web application that renders a simple single-page app
 
     npm start
 
-Add a couple of todos. Check one of them and refresh the page. As you'll see, the application doesn't remember
-that a todo is marked as done.
+Open `http://localhost:8666` in your browser and add a couple of todos.
+
+![screenshot](docs/screenshot.png)
+
+Check one of them and refresh the page. As you'll see, the application doesn't remember that a todo is marked as done.
 
 ## Implement a new feature
 
