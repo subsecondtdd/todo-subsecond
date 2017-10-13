@@ -24,7 +24,7 @@ Fast and stable full-stack tests that go through the UI are possible when the fo
 
 ## Install Software
 
-* [Node.js](https://nodejs.org/en/download/)
+* [Node.js 8.x or higher](https://nodejs.org/en/download/current/)
 
 ## Install dependencies
 
