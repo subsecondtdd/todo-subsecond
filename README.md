@@ -22,6 +22,15 @@ Fast and stable full-stack tests that go through the UI are possible when the fo
   * This is possible thanks to [cucumber-electron](https://github.com/cucumber/cucumber-electron)
 * Tests/Scenarios are decoupled from the UI, allowing the UI to change with minimal impact on tests
 
+## Credits and inspiration
+
+The techniques illustrated by this application are inspired by:
+
+* [Nat Pryce's "Having Our Cake and Eating it](https://youtu.be/Fk4rCn4YLLU) - slides [here](https://speakerdeck.com/npryce/having-our-cake-and-eating-it-1)
+* [Jan Molak's "Testing modern web apps. At scale."](http://agileonthebeach.com/testing-modern-web-apps-scale-jan-molak-software-delivery-2017/)
+* Josh's colleagues at [Featurist](https://www.featurist.co.uk/)
+* Aslak's colleagues at [Cucumber Ltd](https://cucumber.io)
+
 ## Install Software
 
 * [Node.js 8.x or higher](https://nodejs.org/en/download/current/)
