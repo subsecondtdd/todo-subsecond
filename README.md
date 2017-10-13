@@ -91,7 +91,7 @@ Check one of them and refresh the page. As you'll see, the application doesn't r
 
 ## Implement a new feature
 
-We're going to improve the applition to make it remember the state of todos.
+We're going to improve the application to make it remember the state of todos.
 
 Uncomment the three steps in `features/todo.feature` and run `features/run/all` again. Cucumber will tell you that
 two steps are undefined. Copy the first snippet and paste it into `features/step_definitions/todo_steps.js`.
