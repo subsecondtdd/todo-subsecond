@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/node:8-browsers
+        environment:
+          DATABASE_URL: sqlite:./todo-subsecond.sqlite
     working_directory: ~/repo
     steps:
       - run:
@@ -13,12 +15,12 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - todo-subsecond-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
           name: install dependencies
           command: yarn install
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: todo-subsecond-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
       - run: yarn test
