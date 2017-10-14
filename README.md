@@ -1,5 +1,7 @@
 # TODO Subsecond
 
+[![CircleCI](https://circleci.com/gh/subsecondtdd/todo-subsecond.svg?style=svg)](https://circleci.com/gh/subsecondtdd/todo-subsecond)
+
 This is a tiny application with full-stack acceptance tests that can run in milliseconds. The purpose is to illustrate
 the essential techniques to achieve this in any system.
 
