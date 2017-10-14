@@ -2,14 +2,21 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.7.0
+      - image: node:8.7.0
     working_directory: ~/repo
     steps:
+      - run:
+          name: check version
+          command: |
+            node --version
+            yarn --version
       - checkout
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn install
+      - run:
+          name: install dependencies
+          command: yarn install
       - save_cache:
           paths:
             - node_modules
