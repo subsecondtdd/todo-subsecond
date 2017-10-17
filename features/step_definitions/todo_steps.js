@@ -3,19 +3,28 @@ const { Given, When, Then, setDefaultTimeout } = require('cucumber')
 
 setDefaultTimeout(60000)
 
-Given('there is/are already {int} todo(s)', async function(count) {
-  const todoList = await this.contextTodoList()
+Given('{contextTodoList} has added {int} todo(s)', async function(todoList, count) {
   for (let i = 0; i < count; i++)
     await todoList.addTodo({ text: `Todo ${i}` })
 })
 
-When('I add {string}', async function(text) {
-  const todoList = await this.actionTodoList()
+When('{actionTodoList} adds {string}', async function(todoList, text) {
   await todoList.addTodo({ text })
 })
 
-Then('the text of the {ordinal} todo should be {string}', async function(index, text) {
-  const todoList = await this.outcomeTodoList()
+Then("the text of {outcomeTodoList}'s {ordinal} todo should be {string}", async function(todoList, index, text) {
   const todos = await todoList.getTodos()
-  assert.equal(todos[index].text, text)
+  if (todos[index]) {
+    // Synchronous mode
+    assert.equal(todos[index].text, text)
+  } else {
+    // Asynchronous mode
+    return new Promise(resolve => {
+      todoList.docUpdated(async () => {
+        const todos = await todoList.getTodos()
+        assert.equal(todos[index].text, text)
+        resolve()
+      })
+    })
+  }
 })
