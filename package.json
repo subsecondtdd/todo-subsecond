@@ -16,6 +16,8 @@
     "time": "time features/run/memory && time features/run/webdriver-database"
   },
   "dependencies": {
+    "automerge": "^0.5.0",
+    "automerge-ext": "cucumber-ltd/automerge-ext",
     "body-parser": "^1.18.2",
     "browserify": "^14.4.0",
     "browserify-middleware": "^7.1.0",
@@ -30,6 +32,7 @@
     "cucumber": "^3.0.5",
     "cucumber-electron": "^2.3.1",
     "electron": "^1.7.9",
+    "eventsource": "^1.0.5",
     "node-fetch": "^1.7.3",
     "selenium-webdriver": "^3.6.0"
   }

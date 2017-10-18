@@ -1,12 +1,15 @@
 const fs = require('fs')
 const path = require('path')
+const EventSource = require('eventsource')
+const fetch = require('node-fetch')
 
 const { setWorldConstructor, After } = require('cucumber')
-const DatabaseTodoList = require('../../lib/server/DatabaseTodoList')
-const HttpTodoList = require('../../lib/client/HttpTodoList')
+const Automerge = require('automerge')
+const { AutomergeModel, AutomergeHttp } = require('automerge-ext')
+const TodoListCollection = require('../../lib/server/TodoListCollection')
 const BrowserApp = require('../../lib/client/BrowserApp')
 const WebApp = require('../../lib/server/WebApp')
-const MemoryTodoList = require('../../test_support/MemoryTodoList')
+const TodoList = require('../../lib/TodoList')
 const DomTodoList = require('../../test_support/DomTodoList')
 const WebDriverTodoList = require('../../test_support/WebDriverTodoList')
 const BrowserStackTodoList = require('../../test_support/BrowserStackTodoList')
@@ -16,10 +19,57 @@ console.log(`🥒  ${assembly}`)
 
 class TodoWorld {
   constructor() {
-    this._truncate = true
+    const todoListCollection = new TodoListCollection()
+
+    // TODO: Start in Before, make factory methods sync
     this._stoppables = []
 
-    const memoryTodoList = new MemoryTodoList()
+    this._todoLists = new Map()
+    const makeTodoList = (person) => {
+      if (!this._todoLists.has(person)) {
+        const docSet = new Automerge.DocSet()
+
+        let clientConnection
+        const collectionConnection = todoListCollection.createConnection(msg =>
+          clientConnection.receiveMsg(msg)
+        )
+
+        clientConnection = new Automerge.Connection(docSet, msg =>
+          collectionConnection.receiveMsg(msg)
+        )
+        clientConnection.open()
+        collectionConnection.open()
+
+        const todoList = AutomergeModel.make(docSet, 'todolist', TodoList, ['addTodo'])
+        this._todoLists.set(person, todoList)
+      }
+      return this._todoLists.get(person)
+    }
+
+    const makeHttpTodoList = async person => {
+      const webApp = new WebApp({ todoListCollection, serveClient: false })
+      const port = await webApp.listen(0)
+      this._stoppables.push(webApp)
+
+      if (!this._todoLists.has(person)) {
+        const docSet = new Automerge.DocSet()
+        // TODO: refactor this API to something that can be implemented as in-memory as well
+        await AutomergeHttp.makeClient(`http://localhost:${port}/automerge`, EventSource, fetch, docSet, () => null)
+
+        await new Promise(resolve => {
+          const handler = (docId) => {
+            // TODO: Probably check that it's the right docId
+            docSet.unregisterHandler(handler)
+            const todoList = AutomergeModel.make(docSet, 'todolist', TodoList, ['addTodo'])
+
+            this._todoLists.set(person, todoList)
+            resolve()
+          }
+          docSet.registerHandler(handler)
+        })
+      }
+      return this._todoLists.get(person)
+    }
 
     const makeDomTodoList = async todoList => {
       const publicIndexHtmlPath = path.join(__dirname, '..', '..', 'public', 'index.html')
@@ -27,36 +77,27 @@ class TodoWorld {
       const domNode = document.createElement('div')
       domNode.innerHTML = html
       document.body.appendChild(domNode)
-      await new BrowserApp({ domNode, todoList }).mount()
+      new BrowserApp({ domNode, todoList }).mount()
       return new DomTodoList(domNode)
     }
 
-    const makeDatabaseTodoList = async () => {
-      const databaseTodoList = new DatabaseTodoList()
-      await databaseTodoList.start(this._truncate)
-      this._truncate = false
-      return databaseTodoList
-    }
+    const makeWebDriverTodoList = async (person) => {
+      if (this._todoLists.has(person))
+        return this._todoLists.get(person)
 
-    const makeHttpTodoList = async webApppTodoList => {
-      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: false })
+      const webApp = new WebApp({ todoListCollection, serveClient: true })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
-      return new HttpTodoList(`http://localhost:${port}`)
+      const todoList = new WebDriverTodoList(`http://localhost:${port}`)
+      await todoList.start()
+      this._stoppables.push(todoList)
+
+      this._todoLists.set(person, todoList)
+      return todoList
     }
 
-    const makeWebDriverTodoList = async webApppTodoList => {
-      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
-      const port = await webApp.listen(0)
-      this._stoppables.push(webApp)
-      const webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
-      await webDriverTodoList.start()
-      this._stoppables.push(webDriverTodoList)
-      return webDriverTodoList
-    }
-
-    const makeBrowserStackTodoList = async webApppTodoList => {
-      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
+    const makeBrowserStackTodoList = async webAppTodoList => {
+      const webApp = new WebApp({ todoList: webAppTodoList, serveClient: true })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
       const browserStackTodoList = new BrowserStackTodoList(`http://localhost:${port}`)
@@ -67,44 +108,34 @@ class TodoWorld {
 
     const assemblies = {
       'memory': {
-        contextTodoList: async () => memoryTodoList,
-        actionTodoList: async () => memoryTodoList,
-        outcomeTodoList: async () => memoryTodoList,
-      },
-      'database': {
-        contextTodoList: async () => makeDatabaseTodoList(),
-        actionTodoList: async () => makeDatabaseTodoList(),
-        outcomeTodoList: async () => makeDatabaseTodoList(),
+        contextTodoList: async (person) => makeTodoList(person),
+        actionTodoList: async (person) => makeTodoList(person),
+        outcomeTodoList: async (person) => makeTodoList(person),
       },
       'http-memory': {
-        contextTodoList: async () => memoryTodoList,
-        actionTodoList: async () => makeHttpTodoList(memoryTodoList),
-        outcomeTodoList: async () => makeHttpTodoList(memoryTodoList),
+        contextTodoList: async (person) => makeHttpTodoList(person),
+        actionTodoList: async (person) => makeHttpTodoList(person),
+        outcomeTodoList: async (person) => makeHttpTodoList(person),
       },
       'dom-memory': {
-        contextTodoList: async () => memoryTodoList,
-        actionTodoList: async () => makeDomTodoList(memoryTodoList),
-        outcomeTodoList: async () => makeDomTodoList(memoryTodoList),
+        contextTodoList: async (person) => makeTodoList(person),
+        actionTodoList: async (person) => makeDomTodoList(await makeTodoList(person)),
+        outcomeTodoList: async (person) => makeDomTodoList(await makeTodoList(person)),
       },
       'dom-http-memory': {
-        contextTodoList: async () => memoryTodoList,
-        actionTodoList: async () => makeDomTodoList(await makeHttpTodoList(memoryTodoList)),
-        outcomeTodoList: async () => makeDomTodoList(await makeHttpTodoList(memoryTodoList)),
-      },
-      'webdriver-http-database': {
-        contextTodoList: async () => makeDatabaseTodoList(),
-        actionTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList()),
-        outcomeTodoList: async () => makeWebDriverTodoList(await makeDatabaseTodoList())
+        contextTodoList: async (person) => makeTodoList(person),
+        actionTodoList: async (person) => makeDomTodoList(await makeHttpTodoList(await makeTodoList(person))),
+        outcomeTodoList: async (person) => makeDomTodoList(await makeHttpTodoList(await makeTodoList(person))),
       },
       'webdriver-memory': {
-        contextTodoList: async () => memoryTodoList,
-        actionTodoList: async () => makeWebDriverTodoList(memoryTodoList),
-        outcomeTodoList: async () => makeWebDriverTodoList(memoryTodoList)
+        contextTodoList: async (person) => makeWebDriverTodoList(person),
+        actionTodoList: async (person) => makeWebDriverTodoList(person),
+        outcomeTodoList: async (person) => makeWebDriverTodoList(person)
       },
       'browserstack-memory': {
-        contextTodoList: async () => memoryTodoList,
-        actionTodoList: async () => makeBrowserStackTodoList(memoryTodoList),
-        outcomeTodoList: async () => makeBrowserStackTodoList(memoryTodoList)
+        contextTodoList: async (person) => makeTodoList(person),
+        actionTodoList: async (person) => makeBrowserStackTodoList(await makeTodoList(person)),
+        outcomeTodoList: async (person) => makeBrowserStackTodoList(await makeTodoList(person))
       }
     }
 

@@ -3,18 +3,12 @@ module.exports = class DomTodoList {
     this._domNode = domNode
   }
 
-  async addTodo({ text }) {
-    return new Promise(resolve => {
-      this._domNode.addEventListener('todos:todo:added', () => {
-        resolve()
-      })
-
-      this._domNode.querySelector('[aria-label="New Todo Text"]').value = text
-      this._domNode.querySelector('[aria-label="Add Todo"]').click()
-    })
+  addTodo({ text }) {
+    this._domNode.querySelector('[aria-label="New Todo Text"]').value = text
+    this._domNode.querySelector('[aria-label="Add Todo"]').click()
   }
 
-  async getTodos() {
+  getTodos() {
     return [...this._domNode.querySelectorAll('[aria-label="Todos"] li label')].map(label => ({
       text: label.innerText
     }))
