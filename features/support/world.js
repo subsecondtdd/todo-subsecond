@@ -38,15 +38,15 @@ class TodoWorld {
       return databaseTodoList
     }
 
-    const makeHttpTodoList = async webApppTodoList => {
-      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: false })
+    const makeHttpTodoList = async webAppTodoList => {
+      const webApp = new WebApp({ todoList: webAppTodoList, serveClient: false })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
       return new HttpTodoList(`http://localhost:${port}`)
     }
 
-    const makeWebDriverTodoList = async webApppTodoList => {
-      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
+    const makeWebDriverTodoList = async webAppTodoList => {
+      const webApp = new WebApp({ todoList: webAppTodoList, serveClient: true })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
       const webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
@@ -55,8 +55,8 @@ class TodoWorld {
       return webDriverTodoList
     }
 
-    const makeBrowserStackTodoList = async webApppTodoList => {
-      const webApp = new WebApp({ todoList: webApppTodoList, serveClient: true })
+    const makeBrowserStackTodoList = async webAppTodoList => {
+      const webApp = new WebApp({ todoList: webAppTodoList, serveClient: true })
       const port = await webApp.listen(0)
       this._stoppables.push(webApp)
       const browserStackTodoList = new BrowserStackTodoList(`http://localhost:${port}`)
