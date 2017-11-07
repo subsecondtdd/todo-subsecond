@@ -4,27 +4,27 @@ const WebApp = require('../../../lib/server/WebApp')
 
 module.exports = class WebDriverMemoryAssembly {
   async start () {
-    this.memoryTodoList = new MemoryTodoList()
-    this.webApp = new WebApp({ todoList: this.memoryTodoList, serveClient: true })
-    const port = await this.webApp.listen(0)
-    this.webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
-    await this.webDriverTodoList.start()
+    this._memoryTodoList = new MemoryTodoList()
+    this._webApp = new WebApp({ todoList: this._memoryTodoList, serveClient: true })
+    const port = await this._webApp.listen(0)
+    this._webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
+    await this._webDriverTodoList.start()
   }
 
   async stop () {
-    await this.webDriverTodoList.stop()
-    await this.webApp.stop()
+    await this._webDriverTodoList.stop()
+    await this._webApp.stop()
   }
 
   async contextTodoList() {
-    return this.memoryTodoList
+    return this._memoryTodoList
   }
 
   async actionTodoList() {
-    return this.webDriverTodoList
+    return this._webDriverTodoList
   }
 
   async outcomeTodoList() {
-    return this.webDriverTodoList
+    return this._webDriverTodoList
   }
 }

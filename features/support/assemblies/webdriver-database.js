@@ -4,28 +4,28 @@ const WebApp = require('../../../lib/server/WebApp')
 
 module.exports = class WebDriverDatabaseAssembly {
   async start () {
-    this.databaseTodoList = new DatabaseTodoList()
-    await this.databaseTodoList.start(true)
-    this.webApp = new WebApp({ todoList: this.databaseTodoList, serveClient: true })
-    const port = await this.webApp.listen(0)
-    this.webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
-    await this.webDriverTodoList.start()
+    this._databaseTodoList = new DatabaseTodoList()
+    await this._databaseTodoList.start(true)
+    this._webApp = new WebApp({ todoList: this._databaseTodoList, serveClient: true })
+    const port = await this._webApp.listen(0)
+    this._webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
+    await this._webDriverTodoList.start()
   }
 
   async stop () {
-    await this.webDriverTodoList.stop()
-    await this.webApp.stop()
+    await this._webDriverTodoList.stop()
+    await this._webApp.stop()
   }
 
   async contextTodoList() {
-    return this.databaseTodoList
+    return this._databaseTodoList
   }
 
   async actionTodoList() {
-    return this.webDriverTodoList
+    return this._webDriverTodoList
   }
 
   async outcomeTodoList() {
-    return this.webDriverTodoList
+    return this._webDriverTodoList
   }
 }

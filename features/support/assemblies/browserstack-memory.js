@@ -4,27 +4,27 @@ const WebApp = require('../../../lib/server/WebApp')
 
 module.exports = class BrowserStackMemoryAssembly {
   async start () {
-    this.memoryTodoList = new MemoryTodoList()
-    this.webApp = new WebApp({ todoList: this.memoryTodoList, serveClient: true })
-    const port = await this.webApp.listen(0)
-    this.browserStackTodoList = new BrowserStackTodoList(`http://localhost:${port}`)
-    await this.browserStackTodoList.start()
+    this._memoryTodoList = new MemoryTodoList()
+    this._webApp = new WebApp({ todoList: this._memoryTodoList, serveClient: true })
+    const port = await this._webApp.listen(0)
+    this._browserStackTodoList = new BrowserStackTodoList(`http://localhost:${port}`)
+    await this._browserStackTodoList.start()
   }
 
   async stop () {
-    await this.browserStackTodoList.stop()
-    await this.webApp.stop()
+    await this._browserStackTodoList.stop()
+    await this._webApp.stop()
   }
 
   async contextTodoList() {
-    return this.memoryTodoList
+    return this._memoryTodoList
   }
 
   async actionTodoList() {
-    return this.browserStackTodoList
+    return this._browserStackTodoList
   }
 
   async outcomeTodoList() {
-    return this.browserStackTodoList
+    return this._browserStackTodoList
   }
 }
