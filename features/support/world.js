@@ -10,7 +10,7 @@ const assemblyNames = [
   'dom-http-memory',
   'database',
   'webdriver-memory',
-  'webdriver-database',
+  'webdriver-http-database',
   'browserstack-memory'
 ]
 

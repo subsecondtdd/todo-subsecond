@@ -13,7 +13,7 @@
   "scripts": {
     "start": "node lib/server/start.js",
     "test": "features/run/all",
-    "time": "time features/run/memory && time features/run/webdriver-database"
+    "time": "time features/run/memory && time features/run/webdriver-http-database"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
