@@ -12,6 +12,8 @@ module.exports = class DomHttpMemoryAssembly {
     this.webApp = new WebApp({ todoList: this._memoryTodoList, serveClient: false })
   }
 
+  async stop() {}
+
   async contextTodoList() {
     return this._memoryTodoList
   }

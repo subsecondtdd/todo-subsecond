@@ -5,6 +5,8 @@ module.exports = class MemoryAssembly {
     this._memoryTodoList = new MemoryTodoList()
   }
 
+  async stop() {}
+
   async contextTodoList() {
     return this._memoryTodoList
   }
