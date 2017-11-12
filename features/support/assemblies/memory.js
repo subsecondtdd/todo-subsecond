@@ -1,7 +1,7 @@
 const MemoryTodoList = require('../../../test_support/MemoryTodoList')
 
 module.exports = class MemoryAssembly {
-  constructor () {
+  async start () {
     this._memoryTodoList = new MemoryTodoList()
   }
 

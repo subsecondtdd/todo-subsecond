@@ -5,7 +5,7 @@ const MemoryTodoList = require('../../../test_support/MemoryTodoList')
 const BrowserApp = require('../../../lib/client/BrowserApp')
 
 module.exports = class DomMemoryAssembly {
-  constructor () {
+  async start () {
     this._memoryTodoList = new MemoryTodoList()
   }
 

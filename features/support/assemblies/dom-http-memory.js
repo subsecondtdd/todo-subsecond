@@ -7,7 +7,7 @@ const BrowserApp = require('../../../lib/client/BrowserApp')
 const WebApp = require('../../../lib/server/WebApp')
 
 module.exports = class DomHttpMemoryAssembly {
-  constructor () {
+  async start () {
     this._memoryTodoList = new MemoryTodoList()
     this.webApp = new WebApp({ todoList: this._memoryTodoList, serveClient: false })
   }

@@ -1,11 +1,8 @@
 const DatabaseTodoList = require('../../../lib/server/DatabaseTodoList')
 
 module.exports = class DatabaseAssembly {
-  constructor () {
-    this._databaseTodoList = new DatabaseTodoList()
-  }
-
   async start () {
+    this._databaseTodoList = new DatabaseTodoList()
     await this._databaseTodoList.start(true)
   }
 
