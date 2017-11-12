@@ -9,6 +9,8 @@ module.exports = class DomMemoryAssembly {
     this._memoryTodoList = new MemoryTodoList()
   }
 
+  async stop() {}
+
   async contextTodoList() {
     return this._memoryTodoList
   }
