@@ -8,7 +8,6 @@ module.exports = class WebDriverMemoryAssembly {
     this._webApp = new WebApp({ todoList: this._memoryTodoList, serveClient: true })
     const port = await this._webApp.listen(0)
     this._webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
-    await this._webDriverTodoList.start()
   }
 
   async stop () {
@@ -21,6 +20,7 @@ module.exports = class WebDriverMemoryAssembly {
   }
 
   async actionTodoList() {
+    await this._webDriverTodoList.start()
     return this._webDriverTodoList
   }
 
