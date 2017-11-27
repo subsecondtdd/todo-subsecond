@@ -7,9 +7,6 @@
     "Aslak Hellesøy <aslak@cucumber.io>"
   ],
   "license": "MIT",
-  "engines": {
-    "node": "8.x"
-  },
   "scripts": {
     "start": "node lib/server/start.js",
     "test": "features/run/all",
