@@ -9,7 +9,6 @@ module.exports = class WebDriverDatabaseAssembly {
     this._webApp = new WebApp({ todoList: this._databaseTodoList, serveClient: true })
     const port = await this._webApp.listen(0)
     this._webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
-    await this._webDriverTodoList.start()
   }
 
   async stop () {
@@ -22,6 +21,7 @@ module.exports = class WebDriverDatabaseAssembly {
   }
 
   async actionTodoList() {
+    await this._webDriverTodoList.start()
     return this._webDriverTodoList
   }
 
