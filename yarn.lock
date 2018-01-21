@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@browserify/acorn5-object-spread@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@browserify/acorn5-object-spread/-/acorn5-object-spread-5.0.1.tgz#92e9b37f97beac9ec429a3cc479ded380297540c"
+  dependencies:
+    acorn "^5.2.1"
+
 "@types/geojson@^1.0.0":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"
@@ -167,7 +173,7 @@ assert@^1.4.0:
   dependencies:
     util "0.10.3"
 
-assertion-error-formatter@^2.0.0:
+assertion-error-formatter@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/assertion-error-formatter/-/assertion-error-formatter-2.0.1.tgz#6bbdffaec8e2fa9e2b0eb158bfe353132d7c0a9b"
   dependencies:
@@ -379,7 +385,7 @@ browserify-zlib@~0.2.0:
   dependencies:
     pako "~1.0.5"
 
-browserify@^14.0.0, browserify@^14.1.0, browserify@^14.5.0:
+browserify@^14.0.0, browserify@^14.1.0:
   version "14.5.0"
   resolved "https://registry.yarnpkg.com/browserify/-/browserify-14.5.0.tgz#0bbbce521acd6e4d1d54d8e9365008efb85a9cc5"
   dependencies:
@@ -407,6 +413,59 @@ browserify@^14.0.0, browserify@^14.1.0, browserify@^14.5.0:
     insert-module-globals "^7.0.0"
     labeled-stream-splicer "^2.0.0"
     module-deps "^4.0.8"
+    os-browserify "~0.3.0"
+    parents "^1.0.1"
+    path-browserify "~0.0.0"
+    process "~0.11.0"
+    punycode "^1.3.2"
+    querystring-es3 "~0.2.0"
+    read-only-stream "^2.0.0"
+    readable-stream "^2.0.2"
+    resolve "^1.1.4"
+    shasum "^1.0.0"
+    shell-quote "^1.6.1"
+    stream-browserify "^2.0.0"
+    stream-http "^2.0.0"
+    string_decoder "~1.0.0"
+    subarg "^1.0.0"
+    syntax-error "^1.1.1"
+    through2 "^2.0.0"
+    timers-browserify "^1.0.1"
+    tty-browserify "~0.0.0"
+    url "~0.11.0"
+    util "~0.10.1"
+    vm-browserify "~0.0.1"
+    xtend "^4.0.0"
+
+browserify@^15.2.0:
+  version "15.2.0"
+  resolved "https://registry.yarnpkg.com/browserify/-/browserify-15.2.0.tgz#1e121ba1fa72cf9fd2d8df002f8674b68b45df89"
+  dependencies:
+    JSONStream "^1.0.3"
+    assert "^1.4.0"
+    browser-pack "^6.0.1"
+    browser-resolve "^1.11.0"
+    browserify-zlib "~0.2.0"
+    buffer "^5.0.2"
+    cached-path-relative "^1.0.0"
+    concat-stream "~1.5.1"
+    console-browserify "^1.1.0"
+    constants-browserify "~1.0.0"
+    crypto-browserify "^3.0.0"
+    defined "^1.0.0"
+    deps-sort "^2.0.0"
+    domain-browser "~1.1.0"
+    duplexer2 "~0.1.2"
+    events "~1.1.0"
+    glob "^7.1.0"
+    has "^1.0.0"
+    htmlescape "^1.1.0"
+    https-browserify "^1.0.0"
+    inherits "~2.0.1"
+    insert-module-globals "^7.0.0"
+    labeled-stream-splicer "^2.0.0"
+    mkdirp "^0.5.0"
+    module-deps "^5.0.1"
     os-browserify "~0.3.0"
     parents "^1.0.1"
     path-browserify "~0.0.0"
@@ -583,7 +642,7 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-concat-stream@1.6.0:
+concat-stream@1.6.0, concat-stream@~1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
   dependencies:
@@ -707,28 +766,28 @@ cucumber-electron@^2.3.1:
     ansi-to-html "0.6.2"
     electron-window "0.8.1"
 
-cucumber-expressions@^5.0.0:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/cucumber-expressions/-/cucumber-expressions-5.0.3.tgz#7494860afd51309ba91088fb5d1af9a9897b7c7e"
+cucumber-expressions@^5.0.7:
+  version "5.0.13"
+  resolved "https://registry.yarnpkg.com/cucumber-expressions/-/cucumber-expressions-5.0.13.tgz#f174597dae6d2f0121294ac2ea65443249cf1587"
   dependencies:
     becke-ch--regex--s0-0-v1--base--pl--lib "^1.2.0"
 
-cucumber-tag-expressions@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/cucumber-tag-expressions/-/cucumber-tag-expressions-1.0.1.tgz#d6d3c43180a03f5fb4fc957fe1382ddce5cb9ac8"
+cucumber-tag-expressions@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/cucumber-tag-expressions/-/cucumber-tag-expressions-1.1.1.tgz#7f5c7b70009bc2b666591bfe64854578bedee85a"
 
-cucumber@^3.0.6:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/cucumber/-/cucumber-3.1.0.tgz#13886bce87e9018ecb57999bb00c03a1bfa58d5d"
+cucumber@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/cucumber/-/cucumber-3.2.1.tgz#7898509bf6f3fe4ef5fa30ba987bd53d88d53251"
   dependencies:
-    assertion-error-formatter "^2.0.0"
+    assertion-error-formatter "^2.0.1"
     babel-runtime "^6.11.6"
     bluebird "^3.4.1"
     cli-table "^0.3.1"
     colors "^1.1.2"
     commander "^2.9.0"
-    cucumber-expressions "^5.0.0"
-    cucumber-tag-expressions "^1.0.0"
+    cucumber-expressions "^5.0.7"
+    cucumber-tag-expressions "^1.1.1"
     duration "^0.2.0"
     escape-string-regexp "^1.0.5"
     figures "2.0.0"
@@ -843,6 +902,14 @@ detective@^4.0.0:
     acorn "^5.2.1"
     defined "^1.0.0"
 
+detective@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/detective/-/detective-5.0.2.tgz#84ec2e1c581e74211e2ae4ffce1edf52c3263f84"
+  dependencies:
+    "@browserify/acorn5-object-spread" "^5.0.1"
+    acorn "^5.2.1"
+    defined "^1.0.0"
+
 diff@3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/diff/-/diff-3.3.1.tgz#aa8567a6eed03c531fc89d3f711cd0e5259dec75"
@@ -910,9 +977,9 @@ electron-window@0.8.1:
   dependencies:
     is-electron-renderer "^2.0.0"
 
-electron@^1.7.9:
-  version "1.7.9"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-1.7.9.tgz#add54e9f8f83ed02f6519ec10135f698b19336cf"
+electron@^1.7.10:
+  version "1.7.10"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-1.7.10.tgz#3a3e83d965fd7fafe473be8ddf8f472561b6253d"
   dependencies:
     "@types/node" "^7.0.18"
     electron-download "^3.0.1"
@@ -1871,15 +1938,15 @@ mkdirp@0.5.0:
   dependencies:
     minimist "0.0.8"
 
-mkdirp@0.5.1, "mkdirp@>=0.5 0", mkdirp@^0.5.1:
+mkdirp@0.5.1, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
 
-mocha@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-4.0.1.tgz#0aee5a95cf69a4618820f5e51fa31717117daf1b"
+mocha@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-5.0.0.tgz#cccac988b0bc5477119cba0e43de7af6d6ad8f4e"
   dependencies:
     browser-stdout "1.3.0"
     commander "2.11.0"
@@ -1902,6 +1969,26 @@ module-deps@^4.0.8:
     concat-stream "~1.5.0"
     defined "^1.0.0"
     detective "^4.0.0"
+    duplexer2 "^0.1.2"
+    inherits "^2.0.1"
+    parents "^1.0.0"
+    readable-stream "^2.0.2"
+    resolve "^1.1.3"
+    stream-combiner2 "^1.1.1"
+    subarg "^1.0.0"
+    through2 "^2.0.0"
+    xtend "^4.0.0"
+
+module-deps@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/module-deps/-/module-deps-5.0.1.tgz#3bc47c14b0a6d925aff2ec4a177b456a96ae0396"
+  dependencies:
+    JSONStream "^1.0.3"
+    browser-resolve "^1.7.0"
+    cached-path-relative "^1.0.0"
+    concat-stream "~1.6.0"
+    defined "^1.0.0"
+    detective "^5.0.2"
     duplexer2 "^0.1.2"
     inherits "^2.0.1"
     parents "^1.0.0"
@@ -2597,9 +2684,9 @@ sax@>=0.6.0:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
-selenium-webdriver@^3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/selenium-webdriver/-/selenium-webdriver-3.6.0.tgz#2ba87a1662c020b8988c981ae62cb2a01298eafc"
+selenium-webdriver@^4.0.0-alpha.1:
+  version "4.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/selenium-webdriver/-/selenium-webdriver-4.0.0-alpha.1.tgz#cc93415e21d2dc1dfd85dfc5f6b55f3ac53933b1"
   dependencies:
     jszip "^3.1.3"
     rimraf "^2.5.4"
@@ -2636,9 +2723,9 @@ send@0.16.1:
     range-parser "~1.2.0"
     statuses "~1.3.1"
 
-sequelize@^4.17.2:
-  version "4.23.1"
-  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-4.23.1.tgz#2ec517bbb2ccddece45f934ef3c770cfbe818a8b"
+sequelize@^4.31.2:
+  version "4.31.2"
+  resolved "https://registry.yarnpkg.com/sequelize/-/sequelize-4.31.2.tgz#4b414c39bac18ae74946ed49b300f5bc7e423462"
   dependencies:
     bluebird "^3.4.6"
     cls-bluebird "^2.0.1"
