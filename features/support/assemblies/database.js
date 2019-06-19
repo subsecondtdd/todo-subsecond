@@ -6,7 +6,9 @@ module.exports = class DatabaseAssembly {
     await this._databaseTodoList.start(true)
   }
 
-  async stop() {}
+  async stop() {
+    await this._databaseTodoList.stop()
+  }
 
   async contextTodoList() {
     return this._databaseTodoList
