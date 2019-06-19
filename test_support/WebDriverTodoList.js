@@ -35,5 +35,6 @@ module.exports = class WebDriverTodoList {
 
   async stop() {
     await this._driver.quit()
+    console.log('closed')
   }
 }

@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-CUCUMBER_ASSEMBLY=webdriver-memory node node_modules/.bin/cucumber.js "$@"
+CUCUMBER_ASSEMBLY=webdriver-memory node node_modules/.bin/cucumber-js "$@"
