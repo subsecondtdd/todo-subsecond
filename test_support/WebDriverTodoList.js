@@ -8,7 +8,7 @@ module.exports = class WebDriverTodoList {
   }
 
   buildDriver(builder) {
-    return builder.forBrowser('chrome')
+    return builder.forBrowser('firefox')
   }
 
   async start() {
@@ -35,6 +35,5 @@ module.exports = class WebDriverTodoList {
 
   async stop() {
     await this._driver.quit()
-    console.log('closed')
   }
 }
