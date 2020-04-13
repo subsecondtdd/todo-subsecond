@@ -5,7 +5,7 @@ const WebApp = require('../../../lib/server/WebApp')
 module.exports = class WebDriverDatabaseAssembly {
   async start () {
     this._databaseTodoList = new DatabaseTodoList()
-    await this._databaseTodoList.start(true)
+    await this._databaseTodoList.start({truncate:true})
     this._webApp = new WebApp({ todoList: this._databaseTodoList, serveClient: true })
     const port = await this._webApp.listen(0)
     this._webDriverTodoList = new WebDriverTodoList(`http://localhost:${port}`)
