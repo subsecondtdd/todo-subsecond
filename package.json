@@ -27,7 +27,7 @@
     "browserstack-local": "^1.4.5",
     "cucumber": "^6.0.5",
     "cucumber-electron": "^2.7.0",
-    "electron": "^8.1.1",
+    "electron": "^18.3.7",
     "mocha": "^7.1.0",
     "node-fetch": "^2.6.0",
     "selenium-webdriver": "^4.0.0-alpha.7"
